@@ -54,14 +54,14 @@ impl<'a> Client<'a> {
         let mut res = self.reqwest.execute(req)?;
         debug!("response: `{:?}`", res);
 
-        // For debugging, print the body of the response.
-        // let mut s = String::new();
-        // use std::io::Read;
-        // res.read_to_string(&mut s);
-        // println!("body: {}", s);
-
         if !res.status().is_success() {
+            use std::io::Read;
+
             debug!("Query failed, repsonse: {:?}", res);
+
+            let mut body = String::new();
+            res.read_to_string(&mut body)?;
+            debug!("body: {}", body);
             return Err(::WorkErr(format!("Server error? {:?}", res.status())));
         }
 

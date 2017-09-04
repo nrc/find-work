@@ -45,38 +45,38 @@ impl Blob {
             let mut tags = HashSet::new();
 
             // Iterate over the categories in each tab.
-            let tcs = &struct_data.tab_category[&t.id];
-            for tc in tcs {
-                assert!(tc.tab == t.id);
-                let cat = &struct_data.categories[&tc.category];
-                assert!(cat.id == tc.category);
+            if let Some(tcs) = struct_data.tab_category.get(&t.id) {
+                for tc in tcs {
+                    assert!(tc.tab == t.id);
+                    let cat = &struct_data.categories[&tc.category];
+                    assert!(cat.id == tc.category);
 
-                // If there are no issues, don't list the category.
-                if let Some(issues) = issues.issues.get(&(tc.tab.clone(), tc.category.clone())) {
-                    assert!(!issues.is_empty());
-                    // Merge the various links into a single list.
-                    let links = tc
-                        .link
-                        .iter()
-                        .cloned()
-                        .chain(Some(Link {
-                            text: "repository".to_owned(),
-                            url: format!("https://github.com/{}", cat.repository),
-                        }).into_iter())
-                        .chain(cat.links.iter().cloned())
-                        .collect();
-                    let category = Category {
-                        title: cat.title.clone(),
-                        description: cat.description.clone(),
-                        links,
-                        tags: cat.tags.clone(),
-                        issues: issues.clone(),
-                    };
-                    tab.categories.push(category);
-                    tags.extend(&cat.tags);
+                    // If there are no issues, don't list the category.
+                    if let Some(issues) = issues.issues.get(&(tc.tab.clone(), tc.category.clone())) {
+                        assert!(!issues.is_empty());
+                        // Merge the various links into a single list.
+                        let links = tc
+                            .link
+                            .iter()
+                            .cloned()
+                            .chain(Some(Link {
+                                text: "repository".to_owned(),
+                                url: format!("https://github.com/{}", cat.repository),
+                            }).into_iter())
+                            .chain(cat.links.iter().cloned())
+                            .collect();
+                        let category = Category {
+                            title: cat.title.clone(),
+                            description: cat.description.clone(),
+                            links,
+                            tags: cat.tags.clone(),
+                            issues: issues.clone(),
+                        };
+                        tab.categories.push(category);
+                        tags.extend(&cat.tags);
+                    }
                 }
             }
-
 
             tab.tags = tags.into_iter().cloned().collect();
             tab.tags.sort();

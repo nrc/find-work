@@ -31,7 +31,7 @@ pub struct StructuralData {
 }
 
 impl StructuralData {
-    pub fn from_raw_data(tabs: &str, categories: &str, tab_category: &str) -> ::Result<StructuralData> {
+    fn from_raw_data(tabs: &str, categories: &str, tab_category: &str) -> ::Result<StructuralData> {
         let tabs: Vec<Tab> = serde_json::from_str(tabs)?;
         let categories: Vec<Category> = serde_json::from_str(categories)?;
         let tab_category: Vec<TabCategory> = serde_json::from_str(tab_category)?;
