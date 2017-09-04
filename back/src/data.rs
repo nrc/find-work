@@ -84,16 +84,7 @@ pub struct TabCategory {
 #[cfg(test)]
 mod test {
     use super::*;
-
-    fn mock_config() -> Config {
-        Config {
-            repository: "nrc/find-work".to_owned(),
-            username: ::TEST_USERNAME.to_owned(),
-            token: ::TEST_TOKEN.to_owned(),
-            base_path: String::new(),
-            port: 0,
-        }
-    }
+    use mock::mock_config;
 
     #[test]
     fn test_fetch_structural_data() {

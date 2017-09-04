@@ -89,54 +89,7 @@ impl Blob {
 #[cfg(test)]
 mod test {
     use super::*;
-    use data::{Category, Tab, TabCategory};
-    use github::Issue;
-    use std::collections::HashMap;
-
-    // TODO factor out mock_* fns into their own module
-    fn mock_struct_data() -> StructuralData {
-        let mut result = StructuralData {
-            tabs: vec![Tab {
-                id: "foo".to_owned(),
-                title: "Foo".to_owned(),
-                description: "A Foo for foos".to_owned(),
-            }],
-            categories: HashMap::new(),
-            tab_category: HashMap::new(),
-        };
-
-        result.categories.insert("rustfmt".to_owned(), Category {
-            id: "rustfmt".to_owned(),
-            title: "Rustfmt".to_owned(),
-            description: String::new(),
-            repository: "rust-lang-nursery/rustfmt".to_owned(),
-            labels: vec!["p-high".to_owned()],
-            links: vec![],
-            tags: vec!["a".to_owned(), "b".to_owned()],
-        });
-        result.tab_category.insert("foo".to_owned(), vec![TabCategory {
-            tab: "foo".to_owned(),
-            category: "rustfmt".to_owned(),
-            labels: vec!["bug".to_owned()],
-            link: None,
-        }]);
-
-        result
-    }
-
-    fn mock_issue_data() -> IssueData {
-        let mut issues = HashMap::new();
-        issues.insert(("foo".to_owned(), "rustfmt".to_owned()), vec![Issue {
-            number: 42,
-            url: String::new(),
-            title: "Title".to_owned(),
-            body: "body/description".to_owned(),
-            labels: vec![],
-        }]);
-        IssueData {
-            issues,
-        }
-    }
+    use mock::{mock_issue_data, mock_struct_data};
 
     #[test]
     fn test_make() {

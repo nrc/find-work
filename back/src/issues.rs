@@ -29,43 +29,7 @@ pub struct IssueData {
 #[cfg(test)]
 mod test {
     use super::*;
-    use data::{Category, TabCategory};
-
-    fn mock_config() -> Config {
-        Config {
-            repository: String::new(),
-            username: ::TEST_USERNAME.to_owned(),
-            token: ::TEST_TOKEN.to_owned(),
-            base_path: String::new(),
-            port: 0,
-        }
-    }
-
-    fn mock_struct_data() -> StructuralData {
-        let mut result = StructuralData {
-            tabs: vec![],
-            categories: HashMap::new(),
-            tab_category: HashMap::new(),
-        };
-
-        result.categories.insert("rustfmt".to_owned(), Category {
-            id: "rustfmt".to_owned(),
-            title: String::new(),
-            description: String::new(),
-            repository: "rust-lang-nursery/rustfmt".to_owned(),
-            labels: vec!["p-high".to_owned()],
-            links: vec![],
-            tags: vec![],
-        });
-        result.tab_category.insert("foo".to_owned(), vec![TabCategory {
-            tab: "foo".to_owned(),
-            category: "rustfmt".to_owned(),
-            labels: vec!["bug".to_owned()],
-            link: None,
-        }]);
-
-        result
-    }
+    use mock::{mock_config, mock_struct_data};
 
     #[test]
     fn test_fetch_isuses() {

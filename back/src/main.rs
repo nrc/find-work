@@ -13,6 +13,8 @@ mod config;
 mod data;
 mod github;
 mod issues;
+#[cfg(test)]
+mod mock;
 mod server;
 
 use blob::Blob;
