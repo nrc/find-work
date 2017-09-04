@@ -2,8 +2,9 @@ use config::Config;
 use blob::Blob;
 
 use futures::future;
+use mime_guess::guess_mime_type;
 use hyper::{self, Method, StatusCode};
-use hyper::header::{ContentType};
+use hyper::header::ContentType;
 use hyper::server::{Http, Request, Response, Service, NewService};
 use serde_json;
 
@@ -45,8 +46,8 @@ impl WorkService {
         }
         match req.path() {
             "/data" => Route::Data,
-            path if path.starts_with("/static") => {
-                Route::Static(path["/static".len()..].to_owned())
+            path if path.starts_with("/static/") => {
+                Route::Static(path["/static/".len()..].to_owned())
             }
             _ => Route::Index,
         }
@@ -71,6 +72,15 @@ impl WorkService {
         }
         Ok(bytes)
     }
+
+    fn make_404(res: &mut Response, e: Option<::WorkErr>) {
+        debug!("Internal error: {:?}", e);
+        debug!("Serving 404");
+
+        res.set_status(StatusCode::NotFound);
+        res.headers_mut().set(ContentType::plaintext());
+        res.set_body("Page not found.");
+    }
 }
 
 impl Service for WorkService {
@@ -88,17 +98,39 @@ impl Service for WorkService {
                     let data = self.data.lock().unwrap();
                     PathBuf::from(&data.config.index_path)
                 };
+                // TODO don't block
                 let bytes = match self.load_file(&path) {
                     Ok(bytes) => bytes,
-                    // FIXME errors are a pain to make work, it seems - this is not a Method error :-s
-                    Err(_e) => return Box::new(future::err(hyper::Error::Method)),
+                    Err(e) => {
+                        Self::make_404(&mut res, Some(e));
+                        return Box::new(future::ok(res));
+                    }
                 };
-                res = res.with_header(ContentType::html()).with_body(bytes);
+                res.headers_mut().set(ContentType::html());
+                res.set_body(bytes);
             }
-            Route::Static(_) => {
-                // TODO file might not be text, look at extension
-                res = res.with_header(ContentType::plaintext());
-                // TODO
+            Route::Static(p) => {
+                // TODO don't block
+                let path_base = {
+                    let data = self.data.lock().unwrap();
+                    PathBuf::from(&data.config.static_path)
+                };
+                let path = path_base.join(p);
+                // TODO don't block
+                let bytes = match self.load_file(&path) {
+                    Ok(bytes) => bytes,
+                    Err(e) => {
+                        Self::make_404(&mut res, Some(e));
+                        return Box::new(future::ok(res));
+                    }
+                };
+                // mime_guess and hyper have different `Mime` types so we have to make a string and
+                // parse it. Sadness.
+                res.headers_mut().set(ContentType(guess_mime_type(path)
+                    .to_string()
+                    .parse()
+                    .unwrap_or(hyper::mime::APPLICATION_OCTET_STREAM)));
+                res.set_body(bytes);
             }
             Route::Data => {
                 // TODO don't block
@@ -106,16 +138,17 @@ impl Service for WorkService {
                     let data = self.data.lock().unwrap();
                     match serde_json::to_vec(&data.blob) {
                         Ok(blob) => blob,
-                        // FIXME errors are a pain to make work, it seems - this is not a Method error :-s
-                        Err(_e) => return Box::new(future::err(hyper::Error::Method)),
+                        Err(e) => {
+                            Self::make_404(&mut res, Some(e.into()));
+                            return Box::new(future::ok(res));
+                        }
                     }
                 };
-                res = res.with_header(ContentType::json())
-                         .with_body(blob);
+                res.headers_mut().set(ContentType::json());
+                res.set_body(blob);
             }
             Route::Unknown => {
-                // TODO char encoding header, message
-                res.set_status(StatusCode::NotFound);
+                Self::make_404(&mut res, None);
             }
         }
 

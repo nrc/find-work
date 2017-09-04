@@ -4,6 +4,7 @@ extern crate futures;
 extern crate hyper;
 #[macro_use]
 extern crate log;
+extern crate mime_guess;
 extern crate reqwest;
 extern crate serde;
 #[macro_use]
