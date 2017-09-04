@@ -29,7 +29,7 @@ pub fn read_config() -> ::Result<Config> {
 
 // Data for structuring output
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct StructuralData {
     pub tabs: HashMap<String, Tab>,
     pub categories: HashMap<String, Category>,
@@ -38,7 +38,22 @@ pub struct StructuralData {
 
 impl StructuralData {
     pub fn from_raw_data(tabs: &str, categories: &str, tab_category: &str) -> ::Result<StructuralData> {
-        Err(::WorkErr("TODO".to_owned()))
+        let tabs: Vec<Tab> = serde_json::from_str(tabs)?;
+        let categories: Vec<Category> = serde_json::from_str(categories)?;
+        let tab_category: Vec<TabCategory> = serde_json::from_str(tab_category)?;
+
+        let mut result = StructuralData::default();
+        for t in tabs {
+            result.tabs.insert(t.id.clone(), t);
+        }
+        for c in categories {
+            result.categories.insert(c.id.clone(), c);
+        }
+        for tc in tab_category {
+            result.tab_category.insert((tc.tab.clone(), tc.category.clone()), tc);
+        }
+
+        Ok(result)
     }
 }
 

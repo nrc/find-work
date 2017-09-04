@@ -89,16 +89,20 @@ struct File {
 mod test {
     use super::*;
 
-    fn mock_client<F>(f: F)
-    where F: FnOnce(&Client)
-    {
-        let config = Config {
+    fn mock_config() -> Config {
+        Config {
             repository: "nrc/find-work".to_owned(),
             username: ::TEST_USERNAME.to_owned(),
             token: ::TEST_TOKEN.to_owned(),
             base_path: String::new(),
             port: 0,
-        };
+        }
+    }
+
+    fn mock_client<F>(f: F)
+    where F: FnOnce(&Client)
+    {
+        let config = mock_config();
         let client = Client::new(&config).unwrap_or_else(|s| panic!("{:?}", s));
         f(&client);
     }
@@ -134,15 +138,11 @@ mod test {
         });
     }
 
-    // #[test]
-    // fn test_fetch_structural_data() {
-    //     let config = Config {
-    //         repository: "nrc/find-work".to_owned(),
-    //         username: ::TEST_USERNAME.to_owned(),
-    //         token: ::TEST_TOKEN.to_owned(),
-    //         base_path: String::new(),
-    //         port: 0,
-    //     };
-    //     assert!(fetch_structural_data(&config).is_ok());
-    // }
+    #[test]
+    fn test_fetch_structural_data() {
+        let data = fetch_structural_data(&mock_config()).unwrap();
+        assert!(data.tabs.contains_key("starters"));
+        assert!(data.categories.contains_key("rustfmt"));
+        assert!(data.tab_category.contains_key(&("starters".to_owned(), "rustfmt".to_owned())));
+    }
 }
