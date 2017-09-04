@@ -8,6 +8,8 @@ use hyper::server::{Http, Request, Response, Service, NewService};
 use serde_json;
 
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
@@ -50,9 +52,24 @@ impl WorkService {
         }
     }
 
+    // Load file from the cache or disk.
     fn load_file(&self, path: &Path) -> ::Result<Vec<u8>> {
-        Ok(vec![])
-        // TODO
+        {
+            let data = self.data.lock().unwrap();
+            if let Some(bytes) = data.file_cache.get(path) {
+                return Ok(bytes.clone());
+            }
+        }
+
+        let mut bytes = vec![];
+        let mut file = File::open(path)?;
+        file.read_to_end(&mut bytes)?;
+
+        {
+            let mut data = self.data.lock().unwrap();
+            data.file_cache.insert(path.to_owned(), bytes.clone());
+        }
+        Ok(bytes)
     }
 }
 
@@ -66,9 +83,17 @@ impl Service for WorkService {
         let mut res = Response::new();
         match WorkService::route(&req) {
             Route::Index => {
-                // TODO char encoding header
-                res = res.with_header(ContentType::html());
-                // TODO
+                // TODO don't block
+                let path = {
+                    let data = self.data.lock().unwrap();
+                    PathBuf::from(&data.config.index_path)
+                };
+                let bytes = match self.load_file(&path) {
+                    Ok(bytes) => bytes,
+                    // FIXME errors are a pain to make work, it seems - this is not a Method error :-s
+                    Err(_e) => return Box::new(future::err(hyper::Error::Method)),
+                };
+                res = res.with_header(ContentType::html()).with_body(bytes);
             }
             Route::Static(_) => {
                 // TODO file might not be text, look at extension
@@ -81,7 +106,7 @@ impl Service for WorkService {
                     let data = self.data.lock().unwrap();
                     match serde_json::to_vec(&data.blob) {
                         Ok(blob) => blob,
-                        // FIXME errors are a pain to make work, it seems
+                        // FIXME errors are a pain to make work, it seems - this is not a Method error :-s
                         Err(_e) => return Box::new(future::err(hyper::Error::Method)),
                     }
                 };
