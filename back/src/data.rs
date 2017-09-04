@@ -1,18 +1,30 @@
 use std::collections::HashMap;
+use std::fs::File;
+
+use serde_json;
 
 const CONFIG_PATH: &'static str = "../data/config.json";
-const DATA_ROOT: &'static str = "/data";
 
-const TABS: &'static str = "tabs.json";
-const CATEGORIES: &'static str = "categories.json";
-const TAB_CATEGORY: &'static str = "tab-category.json";
+pub const DATA_ROOT: &'static str = "data";
+pub const TABS: &'static str = "tabs.json";
+pub const CATEGORIES: &'static str = "categories.json";
+pub const TAB_CATEGORY: &'static str = "tab-category.json";
 
 /// Configuration for the server.
 #[derive(Clone, Debug, Deserialize)]
 pub struct Config {
-    pub repsitory: String,
+    pub repository: String,
+    pub username: String,
+    pub token: String,
     pub base_path: String,
     pub port: u32,
+}
+
+/// Reads a config from CONFIG_PATH.
+pub fn read_config() -> ::Result<Config> {
+    let file = File::open(CONFIG_PATH)?;
+    let config: Config = serde_json::from_reader(file)?;
+    Ok(config)
 }
 
 // Data for structuring output
@@ -21,7 +33,13 @@ pub struct Config {
 pub struct StructuralData {
     pub tabs: HashMap<String, Tab>,
     pub categories: HashMap<String, Category>,
-    pub tab_categories: HashMap<(String, String), TabCategory>,
+    pub tab_category: HashMap<(String, String), TabCategory>,
+}
+
+impl StructuralData {
+    pub fn from_raw_data(tabs: &str, categories: &str, tab_category: &str) -> ::Result<StructuralData> {
+        Err(::WorkErr("TODO".to_owned()))
+    }
 }
 
 #[derive(Clone, Debug, Deserialize)]

@@ -1,2 +1,4 @@
 /back/target/
+/data/config.json
+/back/test-token.txt
 **/*.rs.bk
