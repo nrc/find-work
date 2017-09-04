@@ -12,6 +12,8 @@ pub struct Config {
     pub token: String,
     pub base_path: String,
     pub addr: String,
+    pub static_path: String,
+    pub index_path: String,
 }
 
 /// Reads a config from CONFIG_PATH.

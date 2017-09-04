@@ -23,6 +23,7 @@ use blob::Blob;
 use config::Config;
 use server::ServerData;
 
+use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -34,11 +35,6 @@ const TEST_TOKEN: &'static str = include_str!("../test-token.txt");
 
 // In seconds.
 const REFRESH_TIMEOUT: u64 = 60 * 60;
-
-// # endpoints
-// /data - return the data blob
-// /static/* - serve a static file
-// /* - serve front/out/index.html
 
 
 fn main() {
@@ -71,7 +67,10 @@ fn run() -> Result<()> {
             thread::sleep(Duration::from_secs(REFRESH_TIMEOUT));
             let mut server_data = server_data_ref.lock().unwrap();
             match make_blob(&server_data.config) {
-                Ok(blob) => server_data.blob = blob,
+                Ok(blob) => {
+                    server_data.blob = blob;
+                    server_data.file_cache = HashMap::new();
+                }
                 Err(e) => {
                     // FIXME we should probably do more to indicate that making the blob failed.
                     eprintln!("Error making blob: {}", e.0);
@@ -91,6 +90,7 @@ fn init() -> Result<ServerData> {
     Ok(ServerData {
         config,
         blob,
+        file_cache: HashMap::new(),
     })
 }
 
