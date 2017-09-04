@@ -8,6 +8,7 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 
+mod config;
 mod data;
 mod github;
 mod issues;
@@ -60,6 +61,6 @@ fn run() -> Result<()> {
 }
 
 fn init() -> Result<()> {
-    let config = data::read_config()?;
+    let config = config::read_config()?;
     Err(::WorkErr("TODO".to_owned()))
 }

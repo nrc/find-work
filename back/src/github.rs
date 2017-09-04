@@ -1,4 +1,4 @@
-use data::Config;
+use config::Config;
 
 use reqwest::{self, header};
 

@@ -1,4 +1,5 @@
-use data::{Config, StructuralData};
+use config::Config;
+use data::StructuralData;
 use github:: {self, Issue};
 
 use std::collections::HashMap;

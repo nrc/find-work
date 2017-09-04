@@ -1,33 +1,15 @@
+use config::Config;
 use github::Client;
 
 use std::collections::HashMap;
-use std::fs::File;
 
 use serde_json;
-
-const CONFIG_PATH: &'static str = "../data/config.json";
 
 const DATA_ROOT: &'static str = "data";
 const TABS: &'static str = "tabs.json";
 const CATEGORIES: &'static str = "categories.json";
 const TAB_CATEGORY: &'static str = "tab-category.json";
 
-/// Configuration for the server.
-#[derive(Clone, Debug, Deserialize)]
-pub struct Config {
-    pub repository: String,
-    pub username: String,
-    pub token: String,
-    pub base_path: String,
-    pub port: u32,
-}
-
-/// Reads a config from CONFIG_PATH.
-pub fn read_config() -> ::Result<Config> {
-    let file = File::open(CONFIG_PATH)?;
-    let config: Config = serde_json::from_reader(file)?;
-    Ok(config)
-}
 
 // Data for structuring output
 pub fn fetch_structural_data(config: &Config) -> ::Result<StructuralData> {
