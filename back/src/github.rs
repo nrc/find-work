@@ -1,34 +1,29 @@
-use data::{self, Config, StructuralData};
+use data::Config;
 
 use reqwest::{self, header};
 
-pub fn fetch_structural_data(config: &Config) -> ::Result<StructuralData> {
-    let client = Client::new(config)?;
-
-    let tabs = client.fetch_file(&format!("{}/{}", data::DATA_ROOT, data::TABS))?;
-    let categories = client.fetch_file(&format!("{}/{}", data::DATA_ROOT, data::CATEGORIES))?;
-    let tab_category = client.fetch_file(&format!("{}/{}", data::DATA_ROOT, data::TAB_CATEGORY))?;
-    
-    let data = StructuralData::from_raw_data(&tabs, &categories, &tab_category)?;
-    Ok(data)
-}
-
-
 // Client for GitHub API requests.
-struct Client<'a> {
+pub struct Client<'a> {
     reqwest: reqwest::Client,
     config: &'a Config,
 }
 
 impl<'a> Client<'a> {
-    fn new(config: &'a Config) -> ::Result<Client<'a>> {
+    pub fn new(config: &'a Config) -> ::Result<Client<'a>> {
         Ok(Client {
             reqwest: reqwest::Client::new()?,
             config
         })
     }
 
-    fn fetch_file(&self, path: &str) -> ::Result<String> {
+    pub fn fetch_issues(&self, repository: &'a str, labels: &str) -> ::Result<Vec<Issue>> {
+        self.query(
+            &format!("/repos/{}/issues?labels={}", repository, labels),
+            |json: Vec<Issue>| { Ok(json) }
+        )
+    }
+
+    pub fn fetch_file(&self, path: &str) -> ::Result<String> {
         self.query(&format!("/repos/{}/contents/{}", self.config.repository, path), |json: File| {
             if json.type_ != "file" {
                 return Err(::WorkErr(format!("Expected file, found {}", json.type_)));
@@ -85,6 +80,23 @@ struct File {
     encoding: String,
 }
 
+#[derive(Debug, Deserialize)]
+pub struct Issue {
+    pub number: u32,
+    #[serde(rename="html_url")]
+    pub url: String,
+    pub title: String,
+    pub body: String,
+    pub labels: Vec<Label>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Label {
+    pub url: String,
+    pub name: String,
+    pub color: String,
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -122,9 +134,9 @@ mod test {
                     assert!(f.type_ == "file");
                     f.name
                 }).collect();
-                assert!(file_names.contains(&data::TABS.to_owned()));
-                assert!(file_names.contains(&data::CATEGORIES.to_owned()));
-                assert!(file_names.contains(&data::TAB_CATEGORY.to_owned()));
+                assert!(file_names.contains(&"tabs.json".to_owned()));
+                assert!(file_names.contains(&"categories.json".to_owned()));
+                assert!(file_names.contains(&"tab-category.json".to_owned()));
                 Ok(())
             }).unwrap_or_else(|s| panic!("{:?}", s));
         });
@@ -139,10 +151,15 @@ mod test {
     }
 
     #[test]
-    fn test_fetch_structural_data() {
-        let data = fetch_structural_data(&mock_config()).unwrap();
-        assert!(data.tabs.contains_key("starters"));
-        assert!(data.categories.contains_key("rustfmt"));
-        assert!(data.tab_category.contains_key(&("starters".to_owned(), "rustfmt".to_owned())));
+    fn test_fetch_issues() {
+        mock_client(|client| {
+            let issues = client.fetch_issues("nrc/testing", "label-1,label-2").unwrap_or_else(|s| panic!("{:?}", s));
+            assert_eq!(issues.len(), 1);
+            assert_eq!(issues[0].number, 2);
+            assert_eq!(issues[0].url, "https://github.com/nrc/testing/issues/2");
+            assert_eq!(issues[0].title, "Testing 2");
+            assert_eq!(issues[0].body, "Another test issue");
+            assert_eq!(issues[0].labels.len(), 2);
+        });
     }
 }

@@ -2,7 +2,7 @@
     "id": "rustfmt",
     "title": "rustfmt",
     "description": "A tool for formatting Rust code",
-    "repository": "https://github.com/rust-lang-nursery/rustfmt",
+    "repository": "rust-lang-nursery/rustfmt",
     "labels": [],
     "links": [{ "text": "contributing", "url": "https://github.com/rust-lang-nursery/rustfmt/blob/master/Contributing.md" }],
     "tags": ["tool", "lang-rust"]
