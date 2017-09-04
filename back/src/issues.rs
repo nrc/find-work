@@ -7,13 +7,15 @@ use std::collections::HashMap;
 pub fn fetch_issues(config: &Config, struct_data: &StructuralData) -> ::Result<IssueData> {
     let mut result = IssueData { issues: HashMap::new() };
     let client = github::Client::new(config)?;
-    for tc in struct_data.tab_category.values() {
-        let category = &struct_data.categories[&tc.category];
-        let labels = [&*category.labels, &*tc.labels].concat().join(",");
-        let issues = client.fetch_issues(&category.repository, &labels)?;
+    for tcs in struct_data.tab_category.values() {
+        for tc in tcs {
+            let category = &struct_data.categories[&tc.category];
+            let labels = [&*category.labels, &*tc.labels].concat().join(",");
+            let issues = client.fetch_issues(&category.repository, &labels)?;
 
-        if !issues.is_empty() {
-            result.issues.insert((tc.tab.clone(), tc.category.clone()), issues);
+            if !issues.is_empty() {
+                result.issues.insert((tc.tab.clone(), tc.category.clone()), issues);
+            }
         }
     }
     Ok(result)
@@ -55,12 +57,12 @@ mod test {
             links: vec![],
             tags: vec![],
         });
-        result.tab_category.insert(("foo".to_owned(), "rustfmt".to_owned()), TabCategory {
-            tab: String::new(),
+        result.tab_category.insert("foo".to_owned(), vec![TabCategory {
+            tab: "foo".to_owned(),
             category: "rustfmt".to_owned(),
             labels: vec!["bug".to_owned()],
             link: None,
-        });
+        }]);
 
         result
     }

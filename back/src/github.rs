@@ -80,7 +80,7 @@ struct File {
     encoding: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Issue {
     pub number: u32,
     #[serde(rename="html_url")]
@@ -90,7 +90,7 @@ pub struct Issue {
     pub labels: Vec<Label>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Label {
     pub url: String,
     pub name: String,

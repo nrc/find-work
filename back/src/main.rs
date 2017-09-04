@@ -8,6 +8,7 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 
+mod blob;
 mod config;
 mod data;
 mod github;
@@ -25,14 +26,15 @@ const TEST_TOKEN: &'static str = include_str!("../test-token.txt");
 // /* - serve front/out/index.html
 
 // # startup
+// read config
 // run cron job
 // schedule cron job
 // start server
 
 // # cron job
-// pull data from home repo
-// run queries
-// build blob
+// x pull data from home repo
+// x run queries
+// x build blob
 
 fn main() {
     env_logger::init().unwrap();
@@ -64,3 +66,4 @@ fn init() -> Result<()> {
     let config = config::read_config()?;
     Err(::WorkErr("TODO".to_owned()))
 }
+

@@ -27,7 +27,7 @@ pub fn fetch_structural_data(config: &Config) -> ::Result<StructuralData> {
 pub struct StructuralData {
     pub tabs: HashMap<String, Tab>,
     pub categories: HashMap<String, Category>,
-    pub tab_category: HashMap<(String, String), TabCategory>,
+    pub tab_category: HashMap<String, Vec<TabCategory>>,
 }
 
 impl StructuralData {
@@ -44,7 +44,7 @@ impl StructuralData {
             result.categories.insert(c.id.clone(), c);
         }
         for tc in tab_category {
-            result.tab_category.insert((tc.tab.clone(), tc.category.clone()), tc);
+            result.tab_category.entry(tc.tab.clone()).or_insert(vec![]).push(tc.clone());
         }
 
         Ok(result)
@@ -69,7 +69,7 @@ pub struct Category {
     pub tags: Vec<String>,
 }
 
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct Link {
     pub text: String,
     pub url: String,
@@ -80,7 +80,7 @@ pub struct TabCategory {
     pub tab: String,
     pub category: String,
     pub labels: Vec<String>,
-    pub link: Option<String>,
+    pub link: Option<Link>,
 }
 
 #[cfg(test)]
@@ -102,6 +102,6 @@ mod test {
         let data = fetch_structural_data(&mock_config()).unwrap();
         assert!(data.tabs.contains_key("starters"));
         assert!(data.categories.contains_key("rustfmt"));
-        assert!(data.tab_category.contains_key(&("starters".to_owned(), "rustfmt".to_owned())));
+        assert!(data.tab_category.contains_key("starters"));
     }
 }
