@@ -43,7 +43,7 @@ mod test {
 
     fn mock_struct_data() -> StructuralData {
         let mut result = StructuralData {
-            tabs: HashMap::new(),
+            tabs: vec![],
             categories: HashMap::new(),
             tab_category: HashMap::new(),
         };

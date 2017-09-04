@@ -30,10 +30,9 @@ impl Blob {
     /// Make a blob from the strucrtural data and issues we've pulled from GitHub.
     pub fn make(struct_data: &StructuralData, issues: &IssueData) -> ::Result<Blob> {
         let mut result = Blob { tabs: vec![] };
-        // TODO can struct_data.tabs be a Vec?
 
         // Iterate over tabs, a raw tab becomes a blob tab.
-        for t in struct_data.tabs.values() {
+        for t in &struct_data.tabs {
             let mut tab = Tab {
                 title: t.title.clone(),
                 description: t.description.clone(),
@@ -97,16 +96,15 @@ mod test {
     // TODO factor out mock_* fns into their own module
     fn mock_struct_data() -> StructuralData {
         let mut result = StructuralData {
-            tabs: HashMap::new(),
+            tabs: vec![Tab {
+                id: "foo".to_owned(),
+                title: "Foo".to_owned(),
+                description: "A Foo for foos".to_owned(),
+            }],
             categories: HashMap::new(),
             tab_category: HashMap::new(),
         };
 
-        result.tabs.insert("foo".to_owned(), Tab {
-            id: "foo".to_owned(),
-            title: "Foo".to_owned(),
-            description: "A Foo for foos".to_owned(),
-        });
         result.categories.insert("rustfmt".to_owned(), Category {
             id: "rustfmt".to_owned(),
             title: "Rustfmt".to_owned(),

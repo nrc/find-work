@@ -25,7 +25,7 @@ pub fn fetch_structural_data(config: &Config) -> ::Result<StructuralData> {
 
 #[derive(Clone, Debug, Default)]
 pub struct StructuralData {
-    pub tabs: HashMap<String, Tab>,
+    pub tabs: Vec<Tab>,
     pub categories: HashMap<String, Category>,
     pub tab_category: HashMap<String, Vec<TabCategory>>,
 }
@@ -37,9 +37,7 @@ impl StructuralData {
         let tab_category: Vec<TabCategory> = serde_json::from_str(tab_category)?;
 
         let mut result = StructuralData::default();
-        for t in tabs {
-            result.tabs.insert(t.id.clone(), t);
-        }
+        result.tabs = tabs;
         for c in categories {
             result.categories.insert(c.id.clone(), c);
         }
@@ -100,7 +98,7 @@ mod test {
     #[test]
     fn test_fetch_structural_data() {
         let data = fetch_structural_data(&mock_config()).unwrap();
-        assert!(data.tabs.contains_key("starters"));
+        assert!(data.tabs.iter().any(|t| t.id == "starters"));
         assert!(data.categories.contains_key("rustfmt"));
         assert!(data.tab_category.contains_key("starters"));
     }
