@@ -1,0 +1,7 @@
+{
+    "repository": "nrc/find-work",
+    "username": "TODO",
+    "token": "TODO",
+    "base_path": "/findmework",
+    "port": 80
+}
