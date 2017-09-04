@@ -11,7 +11,7 @@ pub fn mock_config() -> Config {
         username: ::TEST_USERNAME.to_owned(),
         token: ::TEST_TOKEN.to_owned(),
         base_path: String::new(),
-        port: 0,
+        addr: "127.0.0.1:80".to_owned(),
     }
 }
 

@@ -1,5 +1,7 @@
 extern crate base64;
 extern crate env_logger;
+extern crate futures;
+extern crate hyper;
 #[macro_use]
 extern crate log;
 extern crate reqwest;
@@ -19,7 +21,7 @@ mod server;
 
 use blob::Blob;
 use config::Config;
-use server::Server;
+use server::ServerData;
 
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -61,15 +63,15 @@ impl<T: ToString> From<T> for WorkErr {
 fn run() -> Result<()> {
     info!("starting");
 
-    let server = Arc::new(Mutex::new(init()?));
-    let server_ref = server.clone();
+    let server_data = Arc::new(Mutex::new(init()?));
+    let server_data_ref = server_data.clone();
     // Refresh data every hour.
     thread::spawn(move || {
         loop {
             thread::sleep(Duration::from_secs(REFRESH_TIMEOUT));
-            let mut server = server_ref.lock().unwrap();
-            match make_blob(&server.config) {
-                Ok(blob) => server.blob = blob,
+            let mut server_data = server_data_ref.lock().unwrap();
+            match make_blob(&server_data.config) {
+                Ok(blob) => server_data.blob = blob,
                 Err(e) => {
                     // FIXME we should probably do more to indicate that making the blob failed.
                     eprintln!("Error making blob: {}", e.0);
@@ -78,16 +80,15 @@ fn run() -> Result<()> {
         }
     });
 
-    // TODO startup the web server.
-
+    server::startup(server_data)?;
     Ok(())
 }
 
 // Initialise by reading the config, then fetching data from GitHub.
-fn init() -> Result<Server> {
+fn init() -> Result<ServerData> {
     let config = config::read_config()?;
     let blob = make_blob(&config)?;
-    Ok(Server {
+    Ok(ServerData {
         config,
         blob,
     })

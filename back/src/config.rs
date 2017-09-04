@@ -11,7 +11,7 @@ pub struct Config {
     pub username: String,
     pub token: String,
     pub base_path: String,
-    pub port: u32,
+    pub addr: String,
 }
 
 /// Reads a config from CONFIG_PATH.
