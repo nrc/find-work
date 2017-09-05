@@ -24,10 +24,6 @@ use blob::Blob;
 use config::Config;
 use server::ServerData;
 
-use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
-use std::thread;
-use std::time::Duration;
 
 #[cfg(test)]
 const TEST_USERNAME: &'static str = "nrc";
@@ -59,28 +55,7 @@ impl<T: ToString> From<T> for WorkErr {
 // Run the server.
 fn run() -> Result<()> {
     info!("starting");
-
-    let server_data = Arc::new(Mutex::new(init()?));
-    let server_data_ref = server_data.clone();
-    // Refresh data every hour.
-    thread::spawn(move || {
-        loop {
-            thread::sleep(Duration::from_secs(REFRESH_TIMEOUT));
-            let mut server_data = server_data_ref.lock().unwrap();
-            match make_blob(&server_data.config) {
-                Ok(blob) => {
-                    server_data.blob = blob;
-                    server_data.file_cache = HashMap::new();
-                }
-                Err(e) => {
-                    // FIXME we should probably do more to indicate that making the blob failed.
-                    eprintln!("Error making blob: {}", e.0);
-                }
-            }
-        }
-    });
-
-    server::startup(server_data)?;
+    server::startup(init()?)?;
     Ok(())
 }
 
@@ -88,11 +63,7 @@ fn run() -> Result<()> {
 fn init() -> Result<ServerData> {
     let config = config::read_config()?;
     let blob = make_blob(&config)?;
-    Ok(ServerData {
-        config,
-        blob,
-        file_cache: HashMap::new(),
-    })
+    Ok(ServerData::new(config, blob))
 }
 
 // Fetch data from GitHub and lower it into the frontend format.

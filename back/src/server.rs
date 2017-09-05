@@ -12,31 +12,66 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::Read;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, RwLock};
+use std::thread;
+use std::time::Duration;
 
 
 pub struct ServerData {
     pub config: Config,
-    pub blob: Blob,
-    pub file_cache: HashMap<PathBuf, Vec<u8>>,
+    blob: Blob,
+    file_cache: HashMap<PathBuf, Vec<u8>>,
 }
 
-pub fn startup(data: Arc<Mutex<ServerData>>) -> ::Result<()> {
-    let addr = {
-        let data = data.lock().unwrap();
-        data.config.addr.clone()
-    };
+impl ServerData {
+    pub fn new(config: Config, blob: Blob) -> ServerData {
+        ServerData {
+            config,
+            blob,
+            file_cache: HashMap::new(),
+        }
+    }
+}
+
+pub fn startup(data: ServerData) -> ::Result<()> {
+    let config = data.config.clone();
+    let addr = config.addr.clone();
+    let data = Arc::new(RwLock::new(data));
+
+    schedule_refresh(data.clone(), config.clone());
+
     println!("starting up on http://{}", addr);
     let addr = addr.parse()?;
-    let service = WorkService { data };
+    let service = WorkService { data, config };
     let server = Http::new().bind(&addr, service)?;
     server.run()?;
     Ok(())
 }
 
+fn schedule_refresh(data: Arc<RwLock<ServerData>>, config: Config) {
+    // Refresh data every hour.
+    thread::spawn(move || {
+        loop {
+            thread::sleep(Duration::from_secs(::REFRESH_TIMEOUT));
+            match ::make_blob(&config) {
+                Ok(blob) => {
+                    let new_server_data = ServerData::new(config.clone(), blob);
+                    let mut server_data = data.write().unwrap();
+                    *server_data = new_server_data;
+                }
+                Err(e) => {
+                    // FIXME we should probably do more to indicate that making the blob failed.
+                    eprintln!("Error making blob: {}", e.0);
+                }
+            }
+        }
+    });
+}
+
 #[derive(Clone)]
 struct WorkService {
-    data: Arc<Mutex<ServerData>>,
+    data: Arc<RwLock<ServerData>>,
+    config: Config,
 }
 
 impl WorkService {
@@ -56,18 +91,20 @@ impl WorkService {
     // Load file from the cache or disk.
     fn load_file(&self, path: &Path) -> ::Result<Vec<u8>> {
         {
-            let data = self.data.lock().unwrap();
+            let data = self.data.read().unwrap();
             if let Some(bytes) = data.file_cache.get(path) {
                 return Ok(bytes.clone());
             }
         }
 
+        // TODO we should pre-read index.html and all of static/ so it is done on
+        // a different thread, rather than doing it on demand.
         let mut bytes = vec![];
         let mut file = File::open(path)?;
         file.read_to_end(&mut bytes)?;
 
         {
-            let mut data = self.data.lock().unwrap();
+            let mut data = self.data.write().unwrap();
             data.file_cache.insert(path.to_owned(), bytes.clone());
         }
         Ok(bytes)
@@ -93,12 +130,7 @@ impl Service for WorkService {
         let mut res = Response::new();
         match WorkService::route(&req) {
             Route::Index => {
-                // TODO don't block
-                let path = {
-                    let data = self.data.lock().unwrap();
-                    PathBuf::from(&data.config.index_path)
-                };
-                // TODO don't block
+                let path = PathBuf::from(&self.config.index_path);
                 let bytes = match self.load_file(&path) {
                     Ok(bytes) => bytes,
                     Err(e) => {
@@ -110,13 +142,8 @@ impl Service for WorkService {
                 res.set_body(bytes);
             }
             Route::Static(p) => {
-                // TODO don't block
-                let path_base = {
-                    let data = self.data.lock().unwrap();
-                    PathBuf::from(&data.config.static_path)
-                };
+                let path_base = PathBuf::from(&self.config.static_path);
                 let path = path_base.join(p);
-                // TODO don't block
                 let bytes = match self.load_file(&path) {
                     Ok(bytes) => bytes,
                     Err(e) => {
@@ -133,9 +160,8 @@ impl Service for WorkService {
                 res.set_body(bytes);
             }
             Route::Data => {
-                // TODO don't block
                 let blob = {
-                    let data = self.data.lock().unwrap();
+                    let data = self.data.read().unwrap();
                     match serde_json::to_vec(&data.blob) {
                         Ok(blob) => blob,
                         Err(e) => {
