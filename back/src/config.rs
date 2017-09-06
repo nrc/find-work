@@ -14,6 +14,7 @@ pub struct Config {
     pub addr: String,
     pub static_path: String,
     pub index_path: String,
+    pub dev_mode: bool,
 }
 
 /// Reads a config from CONFIG_PATH.

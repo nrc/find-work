@@ -14,6 +14,7 @@ pub fn mock_config() -> Config {
         addr: "127.0.0.1:80".to_owned(),
         static_path: String::new(),
         index_path: String::new(),
+        dev_mode: false,
     }
 }
 

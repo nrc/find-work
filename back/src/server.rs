@@ -103,7 +103,8 @@ impl WorkService {
         let mut file = File::open(path)?;
         file.read_to_end(&mut bytes)?;
 
-        {
+        // Don't cache files in dev mode.
+        if !self.config.dev_mode {
             let mut data = self.data.write().unwrap();
             data.file_cache.insert(path.to_owned(), bytes.clone());
         }
