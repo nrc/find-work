@@ -1,4 +1,5 @@
 /back/target/
 /data/config.json
 /back/test-token.txt
+/front/node_modules
 **/*.rs.bk
