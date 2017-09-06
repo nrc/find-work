@@ -11,6 +11,7 @@ pub struct Blob {
 
 #[derive(Debug, Serialize)]
 pub struct Tab {
+    pub id: String,
     pub title: String,
     pub description: String,
     pub categories: Vec<Category>,
@@ -19,6 +20,7 @@ pub struct Tab {
 
 #[derive(Debug, Serialize)]
 pub struct Category {
+    pub id: String,
     pub title: String,
     pub description: String,
     pub links: Vec<Link>,
@@ -34,6 +36,7 @@ impl Blob {
         // Iterate over tabs, a raw tab becomes a blob tab.
         for t in &struct_data.tabs {
             let mut tab = Tab {
+                id: t.id.clone(),
                 title: t.title.clone(),
                 description: t.description.clone(),
                 categories: vec![],
@@ -65,6 +68,7 @@ impl Blob {
                             .chain(cat.links.iter().cloned())
                             .collect();
                         let category = Category {
+                            id: cat.id.clone(),
                             title: cat.title.clone(),
                             description: cat.description.clone(),
                             links,
@@ -96,6 +100,7 @@ mod test {
         let blob = Blob::make(&mock_struct_data(), &mock_issue_data()).unwrap_or_else(|s| panic!("{:?}", s));
         assert_eq!(blob.tabs.len(), 1);
         let tab = &blob.tabs[0];
+        assert_eq!(tab.id, "foo");
         assert_eq!(tab.title, "Foo");
         assert_eq!(tab.tags, &["a".to_owned(), "b".to_owned()]);
         assert_eq!(tab.categories.len(), 1);

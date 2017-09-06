@@ -80,7 +80,7 @@ impl WorkService {
             return Route::Unknown;
         }
         match req.path() {
-            "/data" => Route::Data,
+            "/data/" => Route::Data,
             path if path.starts_with("/static/") => {
                 Route::Static(path["/static/".len()..].to_owned())
             }
