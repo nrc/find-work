@@ -41,6 +41,7 @@ the src into `static` too, so it can be served by the backend.
 ```
 npm install
 
+npm install --save marked
 npm install --save react react-dom react-router-dom
 npm install --save-dev babel-loader babel-core
 npm install --save-dev babel-preset-react

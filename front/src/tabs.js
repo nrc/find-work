@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import marked from 'marked';
 
 export const Tabs = (props) => {
     const urlTab = props.match.params.tab;
@@ -64,11 +65,10 @@ const Tab = (props) => {
             body = <Redirect to={'/' + props.tab.id} />;
         }
     }
+    const desc = marked(props.tab.description);
     return <div className="tabBody">
         <div className="tabHeader">
-            <div className="tabHeaderText">
-                {props.tab.description} (TODO markdown)
-            </div>
+            <div className="tabHeaderText" dangerouslySetInnerHTML={{__html: desc}} />
             <TabOptions tags={props.tab.tags} tab={props.tab.id} showAll={showAll} />
         </div>
         {body}
@@ -103,11 +103,11 @@ const TabCategory = (props) => {
         }
         links = <ul className="categoryLinks">{linkList}</ul>;
     }
-    // TODO description is markdown
+    const desc = marked(props.category.description);
     return <div className="tabCategory">
         <div className="back"><Link to={'/' + props.tab.id}>&lt;&lt; back to {props.tab.title}</Link></div>
         <h3 className="categoryTitle">{props.category.title}</h3>
-        <div className="categoryDesc">{props.category.description}</div>
+        <div className="categoryDesc" dangerouslySetInnerHTML={{__html: desc}} />
         {links}
         <IssueList issues={props.category.issues} />
     </div>;
@@ -116,11 +116,12 @@ const TabCategory = (props) => {
 const TabCategories = (props) => {
     let cats = [];
     for (const cat of props.categories) {
-        // TODO description is markdown
+        const desc = marked(cat.description);
+        const link = '/' + props.tab + '/' + cat.id;
         cats.push(<div className="shortCategory" key={cat.id}>
-                     <h3 className = "categoryTitle">{cat.title}</h3>
-                     <div className = "categoryDesc">{cat.description}</div>
-                     <Link to={'/' + props.tab + '/' + cat.id}>{cat.issues.length} issues</Link>
+                     <h3 className = "categoryTitle"><Link to={link}>{cat.title}</Link></h3>
+                     <div className = "categoryDesc" dangerouslySetInnerHTML={{__html: desc}} />
+                     <Link to={link}>{cat.issues.length} issues</Link>
                   </div>);
     }
     return <div className="tabCategories">
@@ -149,7 +150,7 @@ export class IssueList extends React.Component {
         let issues = [];
         for (const i in this.props.issues) {
             const issue = this.props.issues[i];
-            // TODO body - markdown
+
             let body = issue.body.trim();
             let bodyMore = null;
             const linebreak = body.indexOf('\n');
@@ -165,6 +166,8 @@ export class IssueList extends React.Component {
                 bodyMore = <div className="issueMore" onClick={showMore}>...</div>;
             }
 
+            body = marked(body);
+
             let labels = [];
             for (const l of issue.labels) {
                 labels.push(<span className='issueLabel' key={l.name}>{l.name}</span>);
@@ -172,7 +175,7 @@ export class IssueList extends React.Component {
             issues.push(
                 <div className='issue' key={i}>
                     <a href={issue.html_url} target="_blank">{issue.title}</a>
-                    <div className="issueBody">{body}</div>
+                    <div className="issueBody" dangerouslySetInnerHTML={{__html: body}} />
                     {bodyMore}
                     <div className="issueLabels">{labels}</div>
                 </div>
