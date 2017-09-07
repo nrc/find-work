@@ -3,4 +3,16 @@
     "category": "rustfmt",
     "labels": ["good-first-issue"],
     "link": null
+},
+{
+    "tab": "starters",
+    "category": "rls",
+    "labels": ["good-first-issue"],
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "mir",
+    "labels": [],
+    "link": null
 }]
