@@ -28,12 +28,28 @@ const App = (props) => {
             Are you fast, friendly, and fearless? You might find fun fixing Rust!
         </p>
         <p className="narrow">
-            TODO what is Rust? some more text about things to work on
+            <a href="https://www.rust-lang.org" target="_blank">Rust</a> is a systems programming
+            language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
+        </p>
+        <p className="narrow">
+            Rust has a friendly community and lots of interesting, high impact problems to solve. We
+            love new contributors and there are many experienced community members happy to mentor
+            you. This is the place to find something to work on - in the core language or the wider
+            ecosystem.
+        </p>
+        <p className="narrow">
+            There is <a href="https://www.rust-lang.org/en-US/contribute.html" target="_blank">more
+            information about contributing</a> on the Rust website.
+        </p>
+        <p className="narrow">
+            We pride ourselves on maintaining civilized discourse, and to that end contributors are
+            expected to follow our <a href="https://www.rust-lang.org/conduct.html" target="_blank">Code of Conduct</a>.
         </p>
 
         {body}
 
         <p className="footer">
+            Found a bug with this website? Want to contribute? <a href="https://github.com/nrc/find-work" target="_blank">Visit the repo</a>.
         </p>
       </div>
     </BrowserRouter>
