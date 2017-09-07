@@ -35,9 +35,9 @@ const TabStrip = (props) => {
         if (t.id === current) {
             className = "activeTab";
         }
-        tabs.push(<div id={t.id} className={className} key={t.id}><Link to={'/' + t.id}>{t.title}</Link></div>);
+        tabs.push(<span id={t.id} className={className} key={t.id}><Link to={'/' + t.id}>{t.title}</Link></span>);
     }
-    return <div>
+    return <div className="tabStrip">
         {tabs}
     </div>;
 };
@@ -87,9 +87,8 @@ const TabOptions = (props) => {
         showAll = <Link to={'/' + props.tab + '/all'}>show all issues</Link>;
     }
     return <div className="tabHeaderOptions">
-        {showAll}
-        <div className='tags'>{tags}</div>
-        }
+            {showAll}
+            <div className='tags'>{tags}</div>
     </div>;
 };
 
@@ -163,7 +162,7 @@ export class IssueList extends React.Component {
                         return { expanded };
                     });
                 };
-                bodyMore = <div className="issueMore" onClick={showMore}>...</div>;
+                bodyMore = <span className="issueMore" onClick={showMore}>...</span>;
             }
 
             body = marked(body);
@@ -181,7 +180,7 @@ export class IssueList extends React.Component {
                 </div>
             );
         }
-        return <div className="tabAllIssues">
+        return <div className="issues">
             {issues}
         </div>;
     }

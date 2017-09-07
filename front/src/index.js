@@ -20,9 +20,9 @@ const App = (props) => {
     <BrowserRouter>
       <div>
         <img className="logo" src="/static/rust-logo-256x256-blk.png" height="128" width="128" alt="Rust logo" />
-        <h2 className="narrow">
-            Find something Rusty to work on!
-        </h2>
+        <div className="header">
+          <h2>Find something Rusty to work on!</h2>
+        </div>
         <div className="clear"></div>
         <p className="pitch narrow">
             Are you fast, friendly, and fearless? You might find fun fixing Rust!
@@ -32,6 +32,9 @@ const App = (props) => {
         </p>
 
         {body}
+
+        <p className="footer">
+        </p>
       </div>
     </BrowserRouter>
   );

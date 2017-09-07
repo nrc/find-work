@@ -2,19 +2,19 @@
     font-family: 'Fira Sans';
     font-style: normal;
     font-weight: 300;
-    src: local('Fira Sans Light'), url("https://www.rustaceans.org/fonts/FiraSans-Light.woff") format('woff');
+    src: local('Fira Sans Light'), url("/static/fonts/FiraSans-Light.woff") format('woff');
 }
 @font-face {
     font-family: 'Fira Sans';
     font-style: normal;
     font-weight: 400;
-    src: local('Fira Sans'), url("https://www.rustaceans.org/fonts/FiraSans-Regular.woff") format('woff');
+    src: local('Fira Sans'), url("/static/fonts/FiraSans-Regular.woff") format('woff');
 }
 @font-face {
     font-family: 'Fira Sans';
     font-style: normal;
     font-weight: 500;
-    src: local('Fira Sans Medium'), url("https://www.rustaceans.org/fonts/FiraSans-Medium.woff") format('woff');
+    src: local('Fira Sans Medium'), url("/static/fonts/FiraSans-Medium.woff") format('woff');
 }
 
 img.logo {
@@ -44,8 +44,11 @@ p {
     margin-top: 1.2em;
     margin-bottom: 1.2em;
 }
-p.narrow {
+.narrow {
     max-width: 640px;
+}
+.header {
+    padding: 20px;
 }
 li {
     max-width: 580px;
@@ -83,10 +86,6 @@ a:focus {
   color: #2a6496;
   text-decoration: underline;
 }
-a:focus {
-  outline: thin dotted;
-  outline-offset: -2px;
-}
 .pitch b {
     font-weight: 400;
 }
@@ -105,7 +104,7 @@ ul {
 
 h2 {
     font-weight: 500;
-    font-size: 18.5px; /* gridfit */
+    font-size: 30px; /* gridfit */
 }
 h3 {
     font-weight: 500;
@@ -146,3 +145,107 @@ img {
 @media (min-width: 1200px) {.container {
     width: 1170px;
   }}
+
+
+div.tabStrip {
+    width: 100%;
+    display: flex;
+}
+span.tab {
+    flex: 1;
+    background-color: #F7F7F7;
+    text-align: center;
+    border: black solid 1px;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-top-left-radius: 0.25em;
+    border-top-right-radius: 0.25em;
+}
+span.activeTab {
+    flex: 1;
+    text-align: center;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-right: black solid 1px;
+    border-left: black solid 1px;
+    border-top: black solid 1px;
+    border-bottom: none 1px;
+    border-top-left-radius: 0.25em;
+    border-top-right-radius: 0.25em;
+}
+div.tabBody {
+    padding: 2em;
+    border-right: black solid 1px;
+    border-left: black solid 1px;
+    border-bottom: black solid 1px;
+    border-top: none 1px;
+}
+div.tabStrip a:focus,
+div.tabStrip a:hover {
+    text-decoration: none;
+}
+
+div.tabHeader {
+    display: flex;
+}
+div.tabHeaderText {
+    flex: 3;
+}
+div.tabHeaderOptions {
+    flex: 1;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+}
+
+div.shortCategory,
+div.tabAllIssues {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    border-top: 0.25em solid #428bca;   
+}
+div.tabAllIssues {
+    padding-top: 0.6em;
+}
+div.tabCategory {
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    padding-top: 0.6em;
+    border-top: 0.25em solid #428bca;   
+}
+div.issue {
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
+    padding-top: 1.2em;
+    border-top: 0.1em solid #428bca;   
+}
+
+span.issueMore {
+    display: block;
+    font-size: 18px;
+    text-decoration: underline;
+    width: 2em;
+    margin-top: -1em;
+    margin-bottom: 1.2em;
+    cursor: pointer;
+    color: #428bca;
+}
+span.issueMore:hover {
+    color: #2a6496;
+}
+
+div.issueLabels {
+    margin-top: -0.6em;
+}
+span.issueLabel {
+    display: inline-block;
+    border: 1px solid #428bca;
+    border-radius: 0.25em;
+    padding: 0.4em;
+    padding-bottom: 0.2em;
+    padding-top: 0.2em;
+    margin: 0.3em;
+}
