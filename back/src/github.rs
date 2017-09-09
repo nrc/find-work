@@ -1,4 +1,5 @@
 use config::Config;
+use data::FetchFile;
 
 use reqwest::{self, header};
 
@@ -21,18 +22,6 @@ impl<'a> Client<'a> {
             &format!("/repos/{}/issues?labels={}", repository, labels),
             |json: Vec<Issue>| { Ok(json) }
         )
-    }
-
-    pub fn fetch_file(&self, path: &str) -> ::Result<String> {
-        self.query(&format!("/repos/{}/contents/{}", self.config.repository, path), |json: File| {
-            if json.type_ != "file" {
-                return Err(::WorkErr(format!("Expected file, found {}", json.type_)));
-            }
-            if json.encoding != "base64" {
-                return Err(::WorkErr(format!("Expected base64, found {}", json.encoding)));
-            }
-            Ok(String::from_utf8(::base64::decode_config(&json.content, ::base64::MIME)?)?)
-        })
     }
 
     fn query<T, U, F>(&self, query_str: &str, f: F) -> ::Result<T>
@@ -67,6 +56,20 @@ impl<'a> Client<'a> {
 
         let json = res.json()?;
         f(json)
+    }
+}
+
+impl<'a> FetchFile for Client<'a> {
+    fn fetch_file(&self, path: &str) -> ::Result<String> {
+        self.query(&format!("/repos/{}/contents/{}", self.config.repository, path), |json: File| {
+            if json.type_ != "file" {
+                return Err(::WorkErr(format!("Expected file, found {}", json.type_)));
+            }
+            if json.encoding != "base64" {
+                return Err(::WorkErr(format!("Expected base64, found {}", json.encoding)));
+            }
+            Ok(String::from_utf8(::base64::decode_config(&json.content, ::base64::MIME)?)?)
+        })
     }
 }
 

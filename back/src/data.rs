@@ -2,6 +2,8 @@ use config::Config;
 use github::Client;
 
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::Read;
 
 use serde_json;
 
@@ -13,14 +15,36 @@ const TAB_CATEGORY: &'static str = "tab-category.json";
 
 // Data for structuring output
 pub fn fetch_structural_data(config: &Config) -> ::Result<StructuralData> {
-    let client = Client::new(config)?;
+    if config.dev_mode {
+        make_structural_data(LocalFileLoader)
+    } else {
+        make_structural_data(Client::new(config)?)
+    }
+}
 
-    let tabs = client.fetch_file(&format!("{}/{}", DATA_ROOT, TABS))?;
-    let categories = client.fetch_file(&format!("{}/{}", DATA_ROOT, CATEGORIES))?;
-    let tab_category = client.fetch_file(&format!("{}/{}", DATA_ROOT, TAB_CATEGORY))?;
+fn make_structural_data<F: FetchFile>(loader: F) -> ::Result<StructuralData> {
+    let tabs = loader.fetch_file(&format!("{}/{}", DATA_ROOT, TABS))?;
+    let categories = loader.fetch_file(&format!("{}/{}", DATA_ROOT, CATEGORIES))?;
+    let tab_category = loader.fetch_file(&format!("{}/{}", DATA_ROOT, TAB_CATEGORY))?;
     
     let data = StructuralData::from_raw_data(&tabs, &categories, &tab_category)?;
     Ok(data)
+}
+
+// Load the contents of a file from somewhere.
+pub trait FetchFile {
+    fn fetch_file(&self, filename: &str) -> ::Result<String>;
+}
+
+struct LocalFileLoader;
+
+impl FetchFile for LocalFileLoader {
+    fn fetch_file(&self, filename: &str) -> ::Result<String> {
+        let mut file = File::open(filename)?;
+        let mut result = String::new();
+        file.read_to_string(&mut result)?;
+        Ok(result)
+    }
 }
 
 #[derive(Clone, Debug, Default)]
@@ -92,5 +116,12 @@ mod test {
         assert!(data.tabs.iter().any(|t| t.id == "starters"));
         assert!(data.categories.contains_key("rustfmt"));
         assert!(data.tab_category.contains_key("starters"));
+    }
+
+    #[test]
+    fn test_local_file_loader() {
+        let loader = LocalFileLoader;
+        let s = loader.fetch_file("test-token.txt.example").unwrap();
+        assert_eq!(s, "Put your GitHub token here\n");
     }
 }
