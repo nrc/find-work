@@ -4,6 +4,7 @@ use github::Client;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::Read;
+use std::path::Path;
 
 use serde_json;
 
@@ -40,7 +41,9 @@ struct LocalFileLoader;
 
 impl FetchFile for LocalFileLoader {
     fn fetch_file(&self, filename: &str) -> ::Result<String> {
-        let mut file = File::open(filename)?;
+        let path = Path::new("..").to_owned();
+        let path = path.join(filename);
+        let mut file = File::open(path)?;
         let mut result = String::new();
         file.read_to_string(&mut result)?;
         Ok(result)
@@ -121,7 +124,7 @@ mod test {
     #[test]
     fn test_local_file_loader() {
         let loader = LocalFileLoader;
-        let s = loader.fetch_file("test-token.txt.example").unwrap();
+        let s = loader.fetch_file("back/test-token.txt.example").unwrap();
         assert_eq!(s, "Put your GitHub token here\n");
     }
 }
