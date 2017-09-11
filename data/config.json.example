@@ -2,7 +2,6 @@
     "repository": "nrc/find-work",
     "username": "TODO",
     "token": "TODO",
-    "base_path": "/findmework",
     "addr": "127.0.0.1:80",
     "static_path": "../static",
     "index_path": "../static/index.html",

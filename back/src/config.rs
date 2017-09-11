@@ -10,7 +10,6 @@ pub struct Config {
     pub repository: String,
     pub username: String,
     pub token: String,
-    pub base_path: String,
     pub addr: String,
     pub static_path: String,
     pub index_path: String,
