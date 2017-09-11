@@ -24,7 +24,7 @@
     "labels": [],
     "links": [{ "text": "user guide", "url": "https://rust-lang-nursery.github.io/rust-bindgen/" }, { "text": "contributing", "url": "https://github.com/rust-lang-nursery/rust-bindgen/blob/master/CONTRIBUTING.md" }],
     "tags": ["tool", "lang-rust"]
-}
+},
 {
     "id": "compiler",
     "title": "compiler",
