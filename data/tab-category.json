@@ -13,6 +13,20 @@
     "link": null
 },
 {
+    "tab": "starters",
+    "category": "bindgen",
+    "labels": ["E-easy"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "bindgen",
+    "labels": ["E-less-easy"],
+    "milestone": null,
+    "link": null
+},
+{
     "tab": "impl",
     "category": "compiler",
     "labels": [],
