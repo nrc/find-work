@@ -2,17 +2,20 @@
     "tab": "starters",
     "category": "rustfmt",
     "labels": ["good-first-issue"],
+    "milestone": null,
     "link": null
 },
 {
     "tab": "starters",
     "category": "rls",
     "labels": ["good-first-issue"],
+    "milestone": null,
     "link": null
 },
 {
     "tab": "impl",
-    "category": "mir",
+    "category": "compiler",
     "labels": [],
+    "milestone": "impl period",
     "link": null
 }]

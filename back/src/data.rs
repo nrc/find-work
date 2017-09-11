@@ -105,6 +105,7 @@ pub struct TabCategory {
     pub tab: String,
     pub category: String,
     pub labels: Vec<String>,
+    pub milestone: Option<String>,
     pub link: Option<Link>,
 }
 

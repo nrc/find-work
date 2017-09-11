@@ -17,11 +17,11 @@
     "tags": ["tool", "lang-rust"]
 },
 {
-    "id": "mir",
-    "title": "MIR (compiler)",
-    "description": "The middle of the compiler",
+    "id": "compiler",
+    "title": "compiler",
+    "description": "The Rust compiler",
     "repository": "rust-lang/rust",
-    "labels": ["A-mir"],
+    "labels": ["T-compiler"],
     "links": [],
     "tags": ["compiler", "lang-rust"]
 }

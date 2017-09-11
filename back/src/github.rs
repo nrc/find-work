@@ -2,24 +2,60 @@ use config::Config;
 use data::FetchFile;
 
 use reqwest::{self, header};
+use std::collections::HashMap;
+use std::iter::FromIterator;
 
 // Client for GitHub API requests.
 pub struct Client<'a> {
     reqwest: reqwest::Client,
     config: &'a Config,
+    cached_milestones: HashMap<String, HashMap<String, u32>>,
 }
 
 impl<'a> Client<'a> {
     pub fn new(config: &'a Config) -> ::Result<Client<'a>> {
         Ok(Client {
             reqwest: reqwest::Client::new()?,
-            config
+            config,
+            cached_milestones: HashMap::new(),
         })
     }
 
-    pub fn fetch_issues(&self, repository: &'a str, labels: &str) -> ::Result<Vec<Issue>> {
+    fn ensure_milestones(&mut self, repository: &str) -> ::Result<()> {
+        if self.cached_milestones.contains_key(repository) {
+            return Ok(())
+        }
+
+        let query_string = format!("/repos/{}/milestones", repository);
+        let map = self.query(
+            &query_string,
+            |json: Vec<Milestone>| {
+                Ok(HashMap::from_iter(json.into_iter().map(|ms| (ms.title, ms.number))))
+            }
+        )?;
+
+        self.cached_milestones.insert(repository.to_owned(), map);
+        Ok(())
+    }
+
+    fn milestone_number(&mut self, repository: &str, milestone: &str) -> ::Result<u32> {
+        self.ensure_milestones(repository)?;
+
+        let milestones = &self.cached_milestones[repository];
+        match milestones.get(milestone) {
+            Some(n) => Ok(*n),
+            None => Err(::WorkErr(format!("Bad milestone {} in {}", milestone, repository))),
+        }
+    }
+
+    pub fn fetch_issues(&mut self, repository: &str, labels: &str, milestone: Option<&str>) -> ::Result<Vec<Issue>> {
+        let mut query_string = format!("/repos/{}/issues?labels={}", repository, labels);
+        if let Some(milestone) = milestone {
+            let milestone = self.milestone_number(repository, milestone)?;
+            query_string.push_str(&format!("&milestone={}", milestone));
+        }
         self.query(
-            &format!("/repos/{}/issues?labels={}", repository, labels),
+            &query_string,
             |json: Vec<Issue>| { Ok(json) }
         )
     }
@@ -100,17 +136,23 @@ pub struct Label {
     pub color: String,
 }
 
+#[derive(Clone, Debug, Deserialize)]
+struct Milestone {
+    number: u32,
+    title: String,
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
     use mock::mock_config;
 
     fn mock_client<F>(f: F)
-    where F: FnOnce(&Client)
+    where F: FnOnce(&mut Client)
     {
         let config = mock_config();
-        let client = Client::new(&config).unwrap_or_else(|s| panic!("{:?}", s));
-        f(&client);
+        let mut client = Client::new(&config).unwrap_or_else(|s| panic!("{:?}", s));
+        f(&mut client);
     }
 
     #[test]
@@ -147,7 +189,7 @@ mod test {
     #[test]
     fn test_fetch_issues() {
         mock_client(|client| {
-            let issues = client.fetch_issues("nrc/testing", "label-1,label-2").unwrap_or_else(|s| panic!("{:?}", s));
+            let issues = client.fetch_issues("nrc/testing", "label-1,label-2", None).unwrap_or_else(|s| panic!("{:?}", s));
             assert_eq!(issues.len(), 1);
             assert_eq!(issues[0].number, 2);
             assert_eq!(issues[0].url, "https://github.com/nrc/testing/issues/2");

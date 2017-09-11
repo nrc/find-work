@@ -6,12 +6,12 @@ use std::collections::HashMap;
 
 pub fn fetch_issues(config: &Config, struct_data: &StructuralData) -> ::Result<IssueData> {
     let mut result = IssueData { issues: HashMap::new() };
-    let client = github::Client::new(config)?;
+    let mut client = github::Client::new(config)?;
     for tcs in struct_data.tab_category.values() {
         for tc in tcs {
             let category = &struct_data.categories[&tc.category];
             let labels = [&*category.labels, &*tc.labels].concat().join(",");
-            let issues = client.fetch_issues(&category.repository, &labels)?;
+            let issues = client.fetch_issues(&category.repository, &labels, tc.milestone.as_ref().map(|s| &**s))?;
 
             if !issues.is_empty() {
                 result.issues.insert((tc.tab.clone(), tc.category.clone()), issues);
