@@ -136,8 +136,8 @@ span.tab {
     padding-left: 2em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    border-top-left-radius: 0.25em;
-    border-top-right-radius: 0.25em;
+    border-top-left-radius: 0.4em;
+    border-top-right-radius: 0.4em;
 }
 span.activeTab {
     flex: 1;
@@ -150,8 +150,8 @@ span.activeTab {
     border-left: black solid 1px;
     border-top: black solid 1px;
     border-bottom: none 1px;
-    border-top-left-radius: 0.25em;
-    border-top-right-radius: 0.25em;
+    border-top-left-radius: 0.4em;
+    border-top-right-radius: 0.4em;
 }
 div.tabBody {
     padding: 2em;
@@ -219,9 +219,10 @@ div.issueLabels {
 span.issueLabel {
     display: inline-block;
     border: 1px solid black;
-    border-radius: 0.25em;
+    border-radius: 0.4em;
     padding: 0.4em;
-    padding-bottom: 0.2em;
-    padding-top: 0.2em;
+    padding-bottom: 0.1em;
+    padding-top: 0.1em;
     margin: 0.3em;
+    font-size: small;
 }
