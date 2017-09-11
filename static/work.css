@@ -2,19 +2,19 @@
     font-family: 'Fira Sans';
     font-style: normal;
     font-weight: 300;
-    src: local('Fira Sans Light'), url("/static/fonts/FiraSans-Light.woff") format('woff');
+    src: local('Fira Sans Light'), url("/findwork/static/fonts/FiraSans-Light.woff") format('woff');
 }
 @font-face {
     font-family: 'Fira Sans';
     font-style: normal;
     font-weight: 400;
-    src: local('Fira Sans'), url("/static/fonts/FiraSans-Regular.woff") format('woff');
+    src: local('Fira Sans'), url("/findwork/static/fonts/FiraSans-Regular.woff") format('woff');
 }
 @font-face {
     font-family: 'Fira Sans';
     font-style: normal;
     font-weight: 500;
-    src: local('Fira Sans Medium'), url("/static/fonts/FiraSans-Medium.woff") format('woff');
+    src: local('Fira Sans Medium'), url("/findwork/static/fonts/FiraSans-Medium.woff") format('woff');
 }
 
 img.logo {

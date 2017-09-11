@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Tabs } from './tabs';
 
-const API_URL = 'http://127.0.0.1:3000/data/';
+const API_URL = 'https://www.rustaceans.org/findwork/data/';
 
 const App = (props) => {
   let body;
@@ -17,9 +17,9 @@ const App = (props) => {
     body = <div>loading...</div>
   }
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/findwork">
       <div>
-        <img className="logo" src="/static/rust-logo-256x256-blk.png" height="128" width="128" alt="Rust logo" />
+        <img className="logo" src="/findwork/static/rust-logo-256x256-blk.png" height="128" width="128" alt="Rust logo" />
         <div className="header">
           <h2>Find something Rusty to work on!</h2>
         </div>
