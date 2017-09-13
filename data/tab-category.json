@@ -20,6 +20,13 @@
     "link": null
 },
 {
+    "tab": "starters",
+    "category": "clippy",
+    "labels": ["E-easy"],
+    "milestone": null,
+    "link": null
+},
+{
     "tab": "impl",
     "category": "bindgen",
     "labels": ["E-less-easy"],
@@ -29,7 +36,7 @@
 {
     "tab": "impl",
     "category": "compiler",
-    "labels": [],
+    "labels": ["B-RFC-approved", "C-tracking-issue"],
     "milestone": "impl period",
     "link": null
 }]
