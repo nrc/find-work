@@ -36,7 +36,7 @@
 {
     "tab": "impl",
     "category": "compiler",
-    "labels": [],
+    "labels": ["B-RFC-approved", "C-tracking-issue"],
     "milestone": "impl period",
     "link": null
 }]
