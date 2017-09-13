@@ -14,6 +14,13 @@
 },
 {
     "tab": "starters",
+    "category": "clippy",
+    "labels": ["E-easy"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "starters",
     "category": "bindgen",
     "labels": ["E-easy"],
     "milestone": null,
