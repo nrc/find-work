@@ -17,6 +17,15 @@
     "tags": ["tool", "lang-rust"]
 },
 {
+    "id": "clippy",
+    "title": "clippy",
+    "description": "A bunch of lints to catch common mistakes and improve your Rust code",
+    "repository": "rust-lang-nursery/rust-clippy",
+    "labels": [],
+    "links": [{ "text": "contributing", "url": "https://github.com/rust-lang-nursery/rust-clippy/blob/master/CONTRIBUTING.md" }],
+    "tags": ["tool", "lang-rust"]
+},
+{
     "id": "bindgen",
     "title": "bindgen",
     "description": "Automatically generates Rust FFI bindings to C and C++ libraries.",
