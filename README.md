@@ -2,6 +2,7 @@
 
 A web app for finding Rust issues to work on.
 
+For documentation on the backing data, see [schema.md](data/schema.md).
 
 ## Architecture
 
