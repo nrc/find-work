@@ -42,5 +42,14 @@
     "labels": ["T-compiler"],
     "links": [],
     "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "clippy",
+    "title": "clippy",
+    "description": "The Clippy linter",
+    "repository": "rust-lang-nursery/rust-clippy",
+    "labels": [],
+    "links": [],
+    "tags": ["tool", "lang-rust"]
 }
 ]
