@@ -2,6 +2,8 @@
 
 A web app for finding Rust issues to work on.
 
+Try it out at https://www.rustaceans.org/findwork
+
 For documentation on the backing data, see [schema.md](data/schema.md).
 
 ## Architecture
