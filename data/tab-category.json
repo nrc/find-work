@@ -53,4 +53,11 @@
     "labels": [],
     "milestone": "impl period",
     "link": null
+},
+{
+    "tab": "impl",
+    "category": "rls-vscode",
+    "labels": [],
+    "milestone": "impl period",
+    "link": null
 }]

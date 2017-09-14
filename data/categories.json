@@ -26,6 +26,15 @@
     "tags": ["tool", "lang-JavaScript"]
 },
 {
+    "id": "rls-vscode",
+    "title": "RLS in Visual Studio Code",
+    "description": "Core Rust IDE support. Implemented by having VSCode be a client of the RLS.",
+    "repository": "rust-lang-nursery/rls-vscode",
+    "labels": [],
+    "links": [{ "text": "implementing RLS clients", "url": "https://github.com/rust-lang-nursery/rls/blob/master/clients.md" }],
+    "tags": ["tool", "lang-TypeScript"]
+},
+{
     "id": "clippy",
     "title": "clippy",
     "description": "A bunch of lints to catch common mistakes and improve your Rust code",
