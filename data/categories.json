@@ -17,6 +17,15 @@
     "tags": ["tool", "lang-rust"]
 },
 {
+    "id": "rls-clients",
+    "title": "RLS editor support",
+    "description": "Support Rust in new editors using the RLS. We'll start by focussing on Atom, but if you're keen on supporting other editors, that is useful too.",
+    "repository": "rust-lang-nursery/rls",
+    "labels": ["clients"],
+    "links": [{ "text": "implementing RLS clients", "url": "https://github.com/rust-lang-nursery/rls/blob/master/clients.md" }],
+    "tags": ["tool", "lang-JavaScript"]
+},
+{
     "id": "clippy",
     "title": "clippy",
     "description": "A bunch of lints to catch common mistakes and improve your Rust code",
