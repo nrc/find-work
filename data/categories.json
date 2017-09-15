@@ -222,5 +222,80 @@
     "labels": ["WG-infra-crates.io"],
     "links": [{ "text": "about", "url": "https://paper.dropbox.com/doc/Crates.io-g8NWnnNIeTq8DaqjGoZLr"}, {"text": "contributing", "url": "https://github.com/rust-lang/crates.io/blob/master/docs/CONTRIBUTING.md"}],
     "tags": ["crates-io", "lang-rust", "lang-JavaScript"]
+},
+{
+    "id": "compiler-errors",
+    "title": "compiler (error messages)",
+    "description": "The Rust compiler",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-compiler-errors"],
+    "links": [{
+      "text": "about",
+      "url": "https://paper.dropbox.com/doc/Compiler-errors-FSZdfXAGo3uMQ1wuDcZcy"
+    }],
+    "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "compiler-front",
+    "title": "compiler (parser and name resolution)",
+    "description": "The Rust compiler",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-compiler-front"],
+    "links": [],
+    "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "compiler-middle",
+    "title": "compiler (type checker)",
+    "description": "The Rust compiler",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-compiler-middle"],
+    "links": [{
+      "text": "about",
+      "url": "https://paper.dropbox.com/doc/Middle-Type-checker-and-MIR-generation-XEPTHIWvzlvqkSC3cluTr"
+    }],
+    "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "compiler-incr",
+    "title": "compiler (incremental compilation)",
+    "description": "The Rust compiler",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-compiler-incr"],
+    "links": [],
+    "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "compiler-const",
+    "title": "compiler (const generics and miri integration)",
+    "description": "The Rust compiler",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-compiler-const"],
+    "links": [],
+    "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "compiler-nll",
+    "title": "compiler (borrow checker and non-lexical lifetimes [NLL])",
+    "description": "The Rust compiler",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-compiler-nll"],
+    "links": [{
+      "text": "about",
+      "url": "https://paper.dropbox.com/doc/Non-Lexical-Lifetimes-u5uc6VxJic67K2ynmTiFV"
+    }],
+    "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "compiler-traits",
+    "title": "compiler (trait system)",
+    "description": "The Rust compiler",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-compiler-traits"],
+    "links": [{
+      "text": "about",
+      "url": "https://paper.dropbox.com/doc/Trait-system-LCgNlSbM5cPOyEyWdoqzW"
+    }],
+    "tags": ["compiler", "lang-rust"]
 }
 ]

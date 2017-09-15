@@ -193,5 +193,54 @@
     "labels": ["E-needs-mentor"],
     "milestone": null,
     "link": null
+},
+{
+    "tab": "impl",
+    "category": "compiler-errors",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "compiler-front",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "compiler-middle",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+   "category": "compiler-incr",
+   "labels": ["E-mentor"],
+   "milestone": null,
+   "link": null
+},
+{
+    "tab": "impl",
+    "category": "compiler-const",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "compiler-nll",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "compiler-traits",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
 }
 ]
