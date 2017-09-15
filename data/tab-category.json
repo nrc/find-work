@@ -55,9 +55,9 @@
     "link": null
 },
 {
-    "tab": "impl",
+    "tab": "starters",
     "category": "compiler",
-    "labels": ["B-RFC-approved", "C-tracking-issue"],
+    "labels": ["E-mentor"],
     "milestone": null,
     "link": null
 },
