@@ -71,6 +71,24 @@
     "tags": ["compiler", "lang-rust"]
 },
 {
+    "id": "rustbuild",
+    "title": "rustbuild",
+    "description": "The Rust compiler's build system",
+    "repository": "rust-lang/rust",
+    "labels": ["WG-infra-rustbuild"],
+    "links": [],
+    "tags": ["infra", "lang-rust"]
+},
+{
+    "id": "perf-rlo",
+    "title": "perf.rust-lang.org",
+    "description": "The Rust statistic monitoring solution.",
+    "repository": "rust-lang-nursery/rustc-perf",
+    "labels": [],
+    "links": [],
+    "tags": ["infra", "lang-rust"]
+},
+{
     "id": "openssl",
     "title": "OpenSSL crate",
     "description": "Rust bindings for the OpenSSL library",
