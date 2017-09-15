@@ -186,5 +186,12 @@
     "labels": ["E-needs-mentor"],
     "milestone": null,
     "link": null
+},
+{
+    "tab": "mentor-others",
+    "category": "compiler",
+    "labels": ["E-needs-mentor"],
+    "milestone": null,
+    "link": null
 }
 ]

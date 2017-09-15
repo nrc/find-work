@@ -12,5 +12,10 @@
     "id": "blitz",
     "title": "libz blitz",
     "description": "The Libz Blitz is the library team’s major 2017 initiative: raising a solid core of the Rust crate ecosystem to a consistent level of completeness and quality"
+},
+{
+    "id": "mentor-others",
+    "title": "mentor others",
+    "description": "Write mentoring instructions to help get others started"
 }
 ]
