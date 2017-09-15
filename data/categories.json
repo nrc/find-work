@@ -69,5 +69,17 @@
     "labels": ["T-compiler"],
     "links": [],
     "tags": ["compiler", "lang-rust"]
+},
+{
+    "id": "openssl",
+    "title": "OpenSSL crate",
+    "description": "Rust bindings for the OpenSSL library",
+    "repository": "sfackler/rust-openssl",
+    "labels": [],
+    "links": [
+      { "text": "documentation", "url": "https://docs.rs/openssl" },
+      { "text": "README", "url": "https://github.com/sfackler/rust-openssl/blob/master/README.md" }
+    ],
+    "tags": ["libs"]
 }
 ]
