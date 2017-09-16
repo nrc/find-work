@@ -63,6 +63,20 @@
 },
 {
     "tab": "impl",
+    "category": "rustbuild",
+    "labels": ["WG-infra-rustbuild"],
+    "milestone": "impl period",
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "perf.rust-lang.org",
+    "labels": [],
+    "milestone": "impl period",
+    "link": null
+},
+{
+    "tab": "impl",
     "category": "openssl",
     "labels": [],
     "milestone": "impl period",
