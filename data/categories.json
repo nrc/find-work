@@ -35,6 +35,15 @@
     "tags": ["tool", "lang-TypeScript"]
 },
 {
+    "id": "intellij-rust",
+    "title": "Intellij-Rust",
+    "description": "Rust plugin for the IntelliJ Platform",
+    "repository": "intellij-rust/intellij-rust",
+    "labels": [],
+    "links": [{ "text": "contributing", "url": "https://github.com/intellij-rust/intellij-rust/blob/master/CONTRIBUTING.md" }],
+    "tags": ["tool", "lang-kotlin"]
+},
+{
     "id": "clippy",
     "title": "clippy",
     "description": "A bunch of lints to catch common mistakes and improve your Rust code",

@@ -27,6 +27,13 @@
     "link": null
 },
 {
+    "tab": "starters",
+    "category": "intellij-rust",
+    "labels": ["up for grab"],
+    "milestone": null,
+    "link": null
+},
+{
     "tab": "impl",
     "category": "bindgen",
     "labels": ["E-less-easy"],
