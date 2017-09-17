@@ -98,22 +98,15 @@
 },
 {
     "tab": "blitz",
-    "category": "gcc",
-    "labels": ["help wanted"],
-    "milestone": null,
-    "link": null
-},
-{
-    "tab": "blitz",
-    "category": "flate2",
-    "labels": ["help wanted"],
-    "milestone": null,
-    "link": null
-},
-{
-    "tab": "blitz",
     "category": "mio",
     "labels": ["help wanted"],
     "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "reqwest",
+    "labels": ["help wanted"],
+    "milestone": "1.0",
     "link": null
 }]

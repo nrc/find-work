@@ -11,6 +11,6 @@
 {
     "id": "blitz",
     "title": "libz blitz",
-    "description": "Find issues in libz blitz evaluated crates"
+    "description": "The Libz Blitz is the library team’s major 2017 initiative: raising a solid core of the Rust crate ecosystem to a consistent level of completeness and quality"
 }
 ]
