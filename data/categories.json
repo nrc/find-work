@@ -108,5 +108,77 @@
       { "text": "README", "url": "https://github.com/sfackler/rust-openssl/blob/master/README.md" }
     ],
     "tags": ["libs"]
+},
+{
+    "id": "rayon",
+    "title": "rayon crate",
+    "description": "Simple work-stealing parallelism for Rust",
+    "repository": "nikomatsakis/rayon",
+    "labels": [],
+    "links": [
+      { "text": "documentation", "url": "https://docs.rs/rayon" },
+      { "text": "README", "url": "https://github.com/nikomatsakis/rayon/blob/master/README.md" }
+    ],
+    "tags": ["libs", "blitz"]
+},
+{
+    "id": "lazy-static",
+    "title": "lazy-static crate",
+    "description": "A small macro for defining lazy evaluated static variables in Rust",
+    "repository": "rust-lang-nursery/lazy-static.rs",
+    "labels": [],
+    "links": [
+      { "text": "documentation", "url": "https://docs.rs/lazy_static" },
+      { "text": "README", "url": "https://github.com/rust-lang-nursery/lazy-static.rs/blob/master/README.md" }
+    ],
+    "tags": ["libs", "blitz"]
+},
+{
+    "id": "log",
+    "title": "log crate",
+    "description": "Logging implementation for Rust",
+    "repository": "rust-lang-nursery/log",
+    "labels": [],
+    "links": [
+      { "text": "documentation", "url": "https://docs.rs/log" },
+      { "text": "README", "url": "https://github.com/rust-lang-nursery/log/blob/master/README.md" }
+    ],
+    "tags": ["libs", "blitz"]
+},
+{
+    "id": "error-chain",
+    "title": "error-chain crate",
+    "description": "Error boilerplate for Rust",
+    "repository": "rust-lang-nursery/error-chain",
+    "labels": [],
+    "links": [
+      { "text": "documentation", "url": "https://docs.rs/error_chain" },
+      { "text": "README", "url": "https://github.com/rust-lang-nursery/error-chain/blob/master/README.md" }
+    ],
+    "tags": ["libs", "blitz"]
+},
+{
+    "id": "mio",
+    "title": "mio crate",
+    "description": "Metal IO library for Rust",
+    "repository": "carllerche/mio",
+    "labels": [],
+    "links": [
+      { "text": "documentation", "url": "https://docs.rs/mio" },
+      { "text": "README", "url": "https://github.com/carllerche/mio/blob/master/README.md" }
+    ],
+    "tags": ["libs", "blitz"]
+},
+{
+    "id": "reqwest",
+    "title": "reqwest crate",
+    "description": "Metal IO library for Rust",
+    "repository": "seanmonstar/reqwest",
+    "labels": [],
+    "links": [
+      { "text": "documentation", "url": "https://docs.rs/reqwest" },
+      { "text": "README", "url": "https://github.com/seanmonstar/reqwest/blob/master/README.md" }
+    ],
+    "tags": ["libs", "blitz"]
 }
 ]

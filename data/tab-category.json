@@ -88,4 +88,46 @@
     "labels": [],
     "milestone": "impl period",
     "link": null
+},
+{
+    "tab": "blitz",
+    "category": "rayon",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "lazy-static",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "log",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "error-chain",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "mio",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "reqwest",
+    "labels": ["help wanted"],
+    "milestone": "1.0",
+    "link": null
 }]

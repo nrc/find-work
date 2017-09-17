@@ -7,5 +7,10 @@
     "id": "impl",
     "title": "impl period",
     "description": "Contribute to Rust's 2017 impl period"
+},
+{
+    "id": "blitz",
+    "title": "libz blitz",
+    "description": "The Libz Blitz is the library team’s major 2017 initiative: raising a solid core of the Rust crate ecosystem to a consistent level of completeness and quality"
 }
 ]
