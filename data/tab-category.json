@@ -67,4 +67,46 @@
     "labels": [],
     "milestone": "impl period",
     "link": null
+},
+{
+    "tab": "blitz",
+    "category": "rayon",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "lazy-static",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "log",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "error-chain",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "gcc",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "blitz",
+    "category": "flate2",
+    "labels": ["help wanted"],
+    "milestone": null,
+    "link": null
 }]

@@ -53,7 +53,7 @@ tab for which there is a `tab-category` (see below).
 * `description`: markdown; rendered for each category in each tab.
 * `repository`: "user/name", e.g., "rust-lang-nursery/rustfmt", used to pull
   issue data, rendered as a link under the description.
-* `labels`: issues must have all the given lables to be selected. Not shown to
+* `labels`: issues must have all the given labels to be selected. Not shown to
   the user (though we do show labels for each issue).
 * `links`: rendered under the description.
 * `tags`: unimplemented!().
