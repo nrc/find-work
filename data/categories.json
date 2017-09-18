@@ -80,6 +80,18 @@
     "tags": ["compiler", "lang-rust"]
 },
 {
+    "id": "crater",
+    "title": "crater",
+    "description": "Tests the compiler against the Rust ecosystem",
+    "repository": "rust-lang-nursery/crater",
+    "labels": ["WG-infra-crater"],
+    "links": [
+        {"text": "Coordination and progress", "url": "https://paper.dropbox.com/doc/Crater-D7DpG48tMhhHhrUm8kyhY"},
+        {"text": "Gitter chat", "url": "https://gitter.im/rust-impl-period/WG-infra-crater"}
+    ],
+    "tags": ["infra", "lang-rust"]
+},
+{
     "id": "rustbuild",
     "title": "rustbuild",
     "description": "The Rust compiler's build system",

@@ -84,6 +84,13 @@
 },
 {
     "tab": "impl",
+    "category": "crater",
+    "labels": [],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
     "category": "rustbuild",
     "labels": ["WG-infra-rustbuild"],
     "milestone": null,
