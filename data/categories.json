@@ -110,6 +110,18 @@
     "tags": ["libs"]
 },
 {
+    "id": "guidelines",
+    "title": "API Guidelines",
+    "description": "A checklist of recommendations on how to design and present the API of a Rust library. Intended to distill API knowledge from high-quality foundational Rust libraries into broadly applicable recommendations to drive consistency, completeness, and quality across the library ecosystem.",
+    "repository": "rust-lang-nursery/api-guidelines",
+    "labels": [],
+    "links": [
+        {"text": "Coordination and progress", "url": "https://paper.dropbox.com/doc/API-Guidelines-bDAAOER4WHdxJ1XtEAFYs"},
+        {"text": "Gitter chat", "url": "https://gitter.im/rust-impl-period/WG-libs-guidelines"}
+    ],
+    "tags": ["libs"]
+},
+{
     "id": "rayon",
     "title": "rayon crate",
     "description": "Simple work-stealing parallelism for Rust",
