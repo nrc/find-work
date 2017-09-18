@@ -6,6 +6,13 @@
     "link": null
 },
 {
+    "tab": "impl",
+    "category": "rustfmt",
+    "labels": [],
+    "milestone": "impl period",
+    "link": null
+},
+{
     "tab": "starters",
     "category": "rls",
     "labels": ["good-first-issue"],
