@@ -204,5 +204,23 @@
       { "text": "README", "url": "https://github.com/seanmonstar/reqwest/blob/master/README.md" }
     ],
     "tags": ["libs", "blitz"]
+},
+{
+    "id": "cargo-registries",
+    "title": "Cargo support for multiple registries",
+    "description": "Going beyond crates.io to support custom registries.",
+    "repository": "rust-lang/cargo",
+    "labels": ["WG-cargo-registries"],
+    "links": [{"text": "about", "url": "https://paper.dropbox.com/doc/Cargo-Multiple-Registries-IrW9bRuZ1rdc4o9UPdQM9"}, { "text": "contributing", "url": "https://github.com/rust-lang/cargo/blob/master/CONTRIBUTING.md" }],
+    "tags": ["cargo", "lang-rust"]
+},
+{
+    "id": "crates-io",
+    "title": "Crates.io",
+    "description": "Pay down some technical debt and implement long-desired features on a production Rust web application!",
+    "repository": "rust-lang/crates.io",
+    "labels": ["WG-infra-crates.io"],
+    "links": [{ "text": "about", "url": "https://paper.dropbox.com/doc/Crates.io-g8NWnnNIeTq8DaqjGoZLr"}, {"text": "contributing", "url": "https://github.com/rust-lang/crates.io/blob/master/docs/CONTRIBUTING.md"}],
+    "tags": ["crates-io", "lang-rust", "lang-JavaScript"]
 }
 ]

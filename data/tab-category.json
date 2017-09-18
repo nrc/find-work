@@ -158,4 +158,33 @@
     "labels": ["help wanted"],
     "milestone": "1.0",
     "link": null
-}]
+},
+{
+    "tab": "impl",
+    "category": "cargo-registries",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "crates-io",
+    "labels": ["E-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "mentor-others",
+    "category": "cargo-registries",
+    "labels": ["E-needs-mentor"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "mentor-others",
+    "category": "crates-io",
+    "labels": ["E-needs-mentor"],
+    "milestone": null,
+    "link": null
+}
+]
