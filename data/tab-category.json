@@ -99,7 +99,7 @@
 {
     "tab": "impl",
     "category": "guidelines",
-    "labels": [],
+    "labels": ["important"],
     "milestone": null,
     "link": null
 },
