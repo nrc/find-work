@@ -70,6 +70,19 @@
     "links": [{ "text": "contributing", "url": "https://github.com/rust-lang/rust-by-example/blob/master/CONTRIBUTING.md" }],
     "tags": ["docs", "lang-rust"]
 },
+ {
+    "id": "rust-cookbook",
+    "title": "Rust Cookbook",
+    "description": "Work on bite-sized examples to get folks cooking with Rust",
+    "repository": "rust-lang-nursery/rust-cookbook",
+    "labels": [],
+    "links": [
+        {"text": "Contributing", "url": "https://github.com/rust-lang-nursery/rust-cookbook/blob/master/CONTRIBUTING.md"},
+        {"text": "Coordination and progress", "url": "https://paper.dropbox.com/doc/Rust-cookbook-DFaopl45jyZGWKI6iFDwD"},
+        {"text": "Gitter chat", "url": "https://gitter.im/rust-impl-period/WG-libs-cookbook"}
+    ],
+    "tags": ["docs", "libs"]
+},
 {
     "id": "compiler",
     "title": "compiler",

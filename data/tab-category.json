@@ -62,6 +62,20 @@
     "link": null
 },
 {
+    "tab": "starters",
+    "category": "rust-cookbook",
+    "labels": ["easy"],
+    "milestone": null,
+    "link": null
+},
+{
+    "tab": "impl",
+    "category": "rust-cookbook",
+    "labels": ["example", "tracking issue"],
+    "milestone": null,
+    "link": null
+},
+{
     "tab": "impl",
     "category": "rls",
     "labels": [],
