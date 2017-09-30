@@ -41,18 +41,10 @@ the src into `static` too, so it can be served by the backend.
 
 ### Frontend
 
+Run this command in `/front`.
+
 ```
 npm install
-
-npm install --save marked
-npm install --save react react-dom react-router-dom
-npm install --save-dev babel-loader babel-core
-npm install --save-dev babel-preset-react
-npm install --save-dev babel-preset-es2015
-npm install --save-dev babel-preset-env
-npm install --save-dev babel-plugin-transform-object-rest-spread
-npm install --save-dev webpack webpack-dev-server
-npm install --save-dev uglifyjs-webpack-plugin
 ```
 
 ### Backend
