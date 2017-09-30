@@ -115,12 +115,17 @@ const TabCategory = (props) => {
 const TabCategories = (props) => {
     let cats = [];
     for (const cat of props.categories) {
+        const length = cat.issues.length;
+        let issueCounter = length + ' issues';
+        if (length === 1) {
+          issueCounter = length + ' issue';
+        }
         const desc = marked(cat.description);
         const link = '/' + props.tab + '/' + cat.id;
         cats.push(<div className="shortCategory" key={cat.id}>
                      <h3 className = "categoryTitle"><Link to={link}>{cat.title}</Link></h3>
                      <div className = "categoryDesc" dangerouslySetInnerHTML={{__html: desc}} />
-                     <Link to={link}>{cat.issues.length} issues</Link>
+                     <Link to={link}>{issueCounter}</Link>
                   </div>);
     }
     return <div className="tabCategories">
