@@ -71,8 +71,8 @@
 {
     "tab": "impl",
     "category": "rust-cookbook",
-    "labels": ["example", "tracking issue"],
-    "milestone": null,
+    "labels": [],
+    "milestone": "impl period",
     "link": null
 },
 {
