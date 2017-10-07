@@ -11,7 +11,16 @@ pub fn fetch_issues(config: &Config, struct_data: &StructuralData) -> ::Result<I
         for tc in tcs {
             let category = &struct_data.categories[&tc.category];
             let labels = [&*category.labels, &*tc.labels].concat().join(",");
+            let negative_labels = tc.negative_labels.as_ref();
             let issues = client.fetch_issues(&category.repository, &labels, tc.milestone.as_ref().map(|s| &**s))?;
+
+            let issues = if let Some(negative_labels) = negative_labels {
+                issues.into_iter()
+                .filter(|issue| issue.labels.iter().all(|l| !negative_labels.contains(&l.name)))
+                .collect()
+            } else {
+                issues
+            };
 
             if !issues.is_empty() {
                 result.issues.insert((tc.tab.clone(), tc.category.clone()), issues);

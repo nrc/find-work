@@ -41,6 +41,7 @@ pub fn mock_struct_data() -> StructuralData {
         tab: "foo".to_owned(),
         category: "rustfmt".to_owned(),
         labels: vec!["bug".to_owned()],
+        negative_labels: None,
         milestone: None,
         link: None,
     }]);

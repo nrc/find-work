@@ -1,7 +1,7 @@
 use config::Config;
 use github::Client;
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -105,6 +105,7 @@ pub struct TabCategory {
     pub tab: String,
     pub category: String,
     pub labels: Vec<String>,
+    pub negative_labels: Option<HashSet<String>>,
     pub milestone: Option<String>,
     pub link: Option<Link>,
 }
