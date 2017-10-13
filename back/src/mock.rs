@@ -3,7 +3,7 @@ use data::{Category, StructuralData, Tab, TabCategory};
 use github::Issue;
 use issues::IssueData;
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 pub fn mock_config() -> Config {
     Config {
@@ -17,7 +17,7 @@ pub fn mock_config() -> Config {
     }
 }
 
-pub fn mock_struct_data() -> StructuralData {
+pub fn mock_struct_data_custom(title: &str, key: &str, repo: &str, labels: Vec<String>, tab_labels: Vec<String>, negative_labels: Option<HashSet<String>>) -> StructuralData {
     let mut result = StructuralData {
         tabs: vec![Tab {
             id: "foo".to_owned(),
@@ -28,25 +28,36 @@ pub fn mock_struct_data() -> StructuralData {
         tab_category: HashMap::new(),
     };
 
-    result.categories.insert("rustfmt".to_owned(), Category {
-        id: "rustfmt".to_owned(),
-        title: "Rustfmt".to_owned(),
+    result.categories.insert(key.to_owned(), Category {
+        id: key.to_owned(),
+        title: title.to_owned(),
         description: String::new(),
-        repository: "rust-lang-nursery/rustfmt".to_owned(),
-        labels: vec!["p-high".to_owned()],
+        repository: repo.to_owned(),
+        labels: labels,
         links: vec![],
         tags: vec!["a".to_owned(), "b".to_owned()],
     });
     result.tab_category.insert("foo".to_owned(), vec![TabCategory {
         tab: "foo".to_owned(),
-        category: "rustfmt".to_owned(),
-        labels: vec!["bug".to_owned()],
-        negative_labels: None,
+        category: key.to_owned(),
+        labels: tab_labels,
+        negative_labels: negative_labels,
         milestone: None,
         link: None,
     }]);
 
     result
+}
+
+pub fn mock_struct_data() -> StructuralData {
+    mock_struct_data_custom(
+        "Rustfmt",
+        "rustfmt",
+        "rust-lang-nursery/rustfmt",
+        vec!["p-high".to_owned()],
+        vec!["bug".to_owned()],
+        None,
+    )
 }
 
 pub fn mock_issue_data() -> IssueData {
