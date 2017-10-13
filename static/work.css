@@ -30,6 +30,7 @@ div.clear {
     clear: both;
 }
 body {
+    background-color: #fff;
     font-family: 'Fira Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin-top: 20px;
     margin-bottom: 10px;
