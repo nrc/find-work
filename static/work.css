@@ -181,7 +181,7 @@ div.shortCategory,
 div.tabAllIssues {
     margin-top: 1.2em;
     margin-bottom: 1.2em;
-    border-top: 0.25em solid #428bca;   
+    border-top: 0.25em solid #428bca;
 }
 div.tabAllIssues {
     padding-top: 0.6em;
@@ -190,13 +190,13 @@ div.tabCategory {
     margin-top: 1.2em;
     margin-bottom: 1.2em;
     padding-top: 0.6em;
-    border-top: 0.25em solid #428bca;   
+    border-top: 0.25em solid #428bca;
 }
 div.issue {
     margin-top: 0.6em;
     margin-bottom: 0.6em;
     padding-top: 1.2em;
-    border-top: 0.1em solid #428bca;   
+    border-top: 0.1em solid #428bca;
 }
 
 span.issueMore {
@@ -205,7 +205,6 @@ span.issueMore {
     text-decoration: underline;
     width: 2em;
     margin-top: -1em;
-    margin-bottom: 1.2em;
     cursor: pointer;
     color: #428bca;
 }
@@ -214,7 +213,7 @@ span.issueMore:hover {
 }
 
 div.issueLabels {
-    margin-top: -0.6em;
+    margin-top: 0.6em;
 }
 span.issueLabel {
     display: inline-block;
