@@ -75,7 +75,7 @@ struct WorkService {
 }
 
 impl WorkService {
-    fn route(req: &Request) -> Route {
+    fn route(&self, req: &Request) -> Route {
         if req.method() != &Method::Get {
             return Route::Unknown;
         }
@@ -83,6 +83,9 @@ impl WorkService {
             "/data/" => Route::Data,
             path if path.starts_with("/static/") => {
                 Route::Static(path["/static/".len()..].to_owned())
+            }
+            path if self.config.dev_mode && path.starts_with("/findwork/static/") => {
+                Route::Static(path["/findwork/static/".len()..].to_owned())
             }
             _ => Route::Index,
         }
@@ -129,7 +132,7 @@ impl Service for WorkService {
 
     fn call(&self, req: Request) -> Self::Future {
         let mut res = Response::new();
-        match WorkService::route(&req) {
+        match self.route(&req) {
             Route::Index => {
                 let path = PathBuf::from(&self.config.index_path);
                 let bytes = match self.load_file(&path) {

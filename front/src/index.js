@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Tabs } from './tabs';
 
-const API_URL = 'https://www.rustaceans.org/findwork/data/';
+const API_URL = process.env.FINDWORK_API;
 
 const App = (props) => {
   let body;
