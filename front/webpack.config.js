@@ -1,9 +1,13 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: "./src/index.js",
   output: {
-    filename: "../static/work.out.js",
+    path: __dirname + '/../static',
+    filename: 'work.out.js',
     libraryTarget: 'var',
-    library: 'Work'
+    library: 'Work',
+    pathinfo: true
   },
   module: {
     loaders: [
@@ -17,5 +21,12 @@ module.exports = {
     contentBase: '.',
     historyApiFallback: true
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'FINDWORK_API': JSON.stringify('/data/')
+      }
+    })
+  ]
 }

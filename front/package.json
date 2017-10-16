@@ -1,9 +1,13 @@
 {
   "name": "front",
+  "private": true,
   "version": "1.0.0",
   "description": "A web app for finding Rust issues to work on.",
   "main": "webpack.config.js",
   "scripts": {
+    "prod": "webpack webpack.config.prod.js --progress",
+    "dev": "webpack --progress",
+    "dev:watch": "webpack --watch --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

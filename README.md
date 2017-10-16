@@ -22,7 +22,8 @@ and after a timeout, the backend queries the GitHub API to get data about
 relevant issues. The backend then keeps this in memory and makes it available in
 a convenient JSON form on the `data` endpoint. The backend also serves static
 data - it will serve anything in the `static` directory verbatim, and any other
-URL it will serve `static/index.html` (configurable).
+URL it will serve `static/index.html` (configurable). Note that the `dev_mode`
+disables the caching of the assets, ideal when developing on the frontend.
 
 The backend is configurable via `data/config.json`.
 
@@ -69,7 +70,7 @@ cargo build
 
 ```
 cd front
-./node_modules/.bin/webpack --watch
+npm run dev:watch
 ```
 
 ## Testing
