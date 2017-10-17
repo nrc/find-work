@@ -12,7 +12,7 @@
     "title": "Rust Language Server (RLS)",
     "description": "The engine behind the Rust IDE experience. Manages builds and data about Rust programs to provide features like 'goto def' and 'type on hover'.\n\nNote that the impl period testing issues are about implementing testing frameworks, not just writing tests.",
     "repository": "rust-lang-nursery/rls",
-    "labels": [],
+    "labels": ["good first issue"],
     "links": [{ "text": "contributing", "url": "https://github.com/rust-lang-nursery/rls/blob/master/contributing.md" }],
     "tags": ["tool", "lang-rust"]
 },
