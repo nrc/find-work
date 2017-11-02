@@ -79,15 +79,21 @@ impl WorkService {
         if req.method() != &Method::Get {
             return Route::Unknown;
         }
-        match req.path() {
-            "/data/" => Route::Data,
-            path if path.starts_with("/static/") => {
-                Route::Static(path["/static/".len()..].to_owned())
+
+        let path = req.path();
+        if path.starts_with("/data/") {
+            let tab = &path["/data/".len()..];
+            if tab.is_empty() {
+                Route::Data
+            } else {
+                Route::DataByTab(tab.to_owned())
             }
-            path if self.config.dev_mode && path.starts_with("/findwork/static/") => {
-                Route::Static(path["/findwork/static/".len()..].to_owned())
-            }
-            _ => Route::Index,
+        } else if path.starts_with("/static/") {
+            Route::Static(path["/static/".len()..].to_owned())
+        } else if self.config.dev_mode && path.starts_with("/findwork/static/") {
+            Route::Static(path["/findwork/static/".len()..].to_owned())
+        } else {
+            Route::Index
         }
     }
 
@@ -177,6 +183,27 @@ impl Service for WorkService {
                 res.headers_mut().set(ContentType::json());
                 res.set_body(blob);
             }
+            Route::DataByTab(ref tab) => {
+                let blob = {
+                    let data = self.data.read().unwrap();
+                    let blob = match data.blob.by_tab(tab) {
+                        Ok(blob) => blob,
+                        Err(e) => {
+                            Self::make_404(&mut res, Some(e.into()));
+                            return Box::new(future::ok(res));
+                        }
+                    };
+                    match serde_json::to_vec(&blob) {
+                        Ok(tab) => tab,
+                        Err(e) => {
+                            Self::make_404(&mut res, Some(e.into()));
+                            return Box::new(future::ok(res));
+                        }
+                    }
+                };
+                res.headers_mut().set(ContentType::json());
+                res.set_body(blob);
+            }
             Route::Unknown => {
                 Self::make_404(&mut res, None);
             }
@@ -199,6 +226,7 @@ impl NewService for WorkService {
 
 enum Route {
     Data,
+    DataByTab(String),
     Index,
     Static(String),
     Unknown,

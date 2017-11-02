@@ -9,7 +9,7 @@ pub struct Blob {
     pub tabs: Vec<Tab>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct Tab {
     pub id: String,
     pub title: String,
@@ -18,7 +18,7 @@ pub struct Tab {
     pub tags: Vec<String>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct Category {
     pub id: String,
     pub title: String,
@@ -88,6 +88,25 @@ impl Blob {
         }
         Ok(result)
     }
+
+    /// Return a view of the blob data which includes all the tabs, but only the
+    /// specified one contains data.
+    pub fn by_tab(&self, tab: &str) -> ::Result<Blob> {
+        if !self.tabs.iter().any(|t| t.id == tab) {
+            return Err(::WorkErr(format!("tab not found: {}", tab)));
+        }
+        let tabs = self.tabs.iter().map(|t| {
+            let mut t = t.clone();
+            if t.id == tab {
+                t
+            } else {
+                t.categories = vec![];
+                t.tags = vec![];
+                t
+            }
+        }).collect();
+        Ok(Blob { tabs })
+    }
 }
 
 #[cfg(test)]
@@ -95,16 +114,33 @@ mod test {
     use super::*;
     use mock::{mock_issue_data, mock_struct_data};
 
-    #[test]
-    fn test_make() {
-        let blob = Blob::make(&mock_struct_data(), &mock_issue_data()).unwrap_or_else(|s| panic!("{:?}", s));
-        assert_eq!(blob.tabs.len(), 1);
-        let tab = &blob.tabs[0];
+    fn make_blob() -> Blob {
+        Blob::make(&mock_struct_data(), &mock_issue_data()).unwrap_or_else(|s| panic!("{:?}", s))
+    }
+
+    fn assert_foo_props(tab: &Tab) {
         assert_eq!(tab.id, "foo");
         assert_eq!(tab.title, "Foo");
         assert_eq!(tab.tags, &["a".to_owned(), "b".to_owned()]);
         assert_eq!(tab.categories.len(), 1);
         let cat = &tab.categories[0];
         assert_eq!(cat.title, "Rustfmt");
+    }
+
+    #[test]
+    fn test_make() {
+        let blob = make_blob();
+        println!("{:?}", blob);
+        assert_eq!(blob.tabs.len(), 2);
+        assert_foo_props(&blob.tabs[0]);
+        assert_eq!(blob.tabs[1].categories.len(), 1);
+    }
+
+    #[test]
+    fn test_by_tab() {
+        let blob = make_blob();
+        let blob_foo = blob.by_tab("foo").unwrap_or_else(|s| panic!("{:?}", s));
+        assert_foo_props(&blob_foo.tabs[0]);
+        assert_eq!(blob_foo.tabs[1].categories.len(), 0);
     }
 }
