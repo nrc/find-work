@@ -92,17 +92,38 @@ impl Blob {
     /// Return a view of the blob data which includes all the tabs, but only the
     /// specified one contains data.
     pub fn by_tab(&self, tab: &str) -> ::Result<Blob> {
-        if !self.tabs.iter().any(|t| t.id == tab) {
+        use std::str::FromStr;
+
+        enum TabIdentifier<'a> {
+            Index(usize),
+            Id(&'a str),
+        }
+
+        impl<'a> TabIdentifier<'a> {
+            fn matches(&self, t: (usize, &Tab)) -> bool {
+                match *self {
+                    TabIdentifier::Index(i) => i == t.0,
+                    TabIdentifier::Id(s) => s == t.1.id,
+                }
+            }
+        }
+
+        let tab_id = match usize::from_str(tab) {
+            Ok(i) => TabIdentifier::Index(i),
+            _ => TabIdentifier::Id(tab),
+        };
+
+        if !self.tabs.iter().enumerate().any(|t| tab_id.matches(t)) {
             return Err(::WorkErr(format!("tab not found: {}", tab)));
         }
-        let tabs = self.tabs.iter().map(|t| {
-            let mut t = t.clone();
-            if t.id == tab {
-                t
+        let tabs = self.tabs.iter().enumerate().map(|t| {
+            let mut tab_clone = t.1.clone();
+            if tab_id.matches(t) {
+                tab_clone
             } else {
-                t.categories = vec![];
-                t.tags = vec![];
-                t
+                tab_clone.categories = vec![];
+                tab_clone.tags = vec![];
+                tab_clone
             }
         }).collect();
         Ok(Blob { tabs })
@@ -140,6 +161,14 @@ mod test {
     fn test_by_tab() {
         let blob = make_blob();
         let blob_foo = blob.by_tab("foo").unwrap_or_else(|s| panic!("{:?}", s));
+        assert_foo_props(&blob_foo.tabs[0]);
+        assert_eq!(blob_foo.tabs[1].categories.len(), 0);
+    }
+
+    #[test]
+    fn test_by_tab_number() {
+        let blob = make_blob();
+        let blob_foo = blob.by_tab("0").unwrap_or_else(|s| panic!("{:?}", s));
         assert_foo_props(&blob_foo.tabs[0]);
         assert_eq!(blob_foo.tabs[1].categories.len(), 0);
     }

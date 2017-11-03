@@ -82,7 +82,10 @@ impl WorkService {
 
         let path = req.path();
         if path.starts_with("/data/") {
-            let tab = &path["/data/".len()..];
+            let mut tab = &path["/data/".len()..];
+            if tab.ends_with('/') {
+                tab = &tab[..tab.len()-1];
+            }
             if tab.is_empty() {
                 Route::Data
             } else {

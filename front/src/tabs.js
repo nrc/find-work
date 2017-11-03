@@ -11,10 +11,21 @@ export class Tabs extends React.Component {
     }
 
     componentDidMount() {
-        fetch(API_URL).then(function(response) {
+        // We start by just trying to download the data for the visible tab.
+        // Then we download all the data.
+        let tab = this.props.match.params.tab;
+        if (!tab) {
+            tab = "0";
+        }
+        fetch(API_URL + tab + "/").then(function(response) {
             return response.json();
         }).then(data => {
             this.setState({ tabs: data.tabs });
+            fetch(API_URL).then(function(response) {
+                return response.json();
+            }).then(data => {
+                this.setState({ tabs: data.tabs });
+            });
         });
     }
 
