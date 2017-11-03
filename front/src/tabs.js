@@ -2,29 +2,50 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import marked from 'marked';
 
-export const Tabs = (props) => {
-    const urlTab = props.match.params.tab;
-    const urlCategory = props.match.params.category;
-    const tabs = props.tabs;
-    let tab;
-    if (!urlTab) {
-        tab = tabs[0];
-    } else {
-        for (const t of tabs) {
-            if (t.id === urlTab) {
-                tab = t;
-                break;
+const API_URL = process.env.FINDWORK_API;
+
+export class Tabs extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { tabs: null };
+    }
+
+    componentDidMount() {
+        fetch(API_URL).then(function(response) {
+            return response.json();
+        }).then(data => {
+            this.setState({ tabs: data.tabs });
+        });
+    }
+
+    render() {
+        if (!this.state.tabs) {
+            return <div>loading...</div>;
+        }
+
+        const urlTab = this.props.match.params.tab;
+        const urlCategory = this.props.match.params.category;
+        const tabs = this.state.tabs;
+        let tab;
+        if (!urlTab) {
+            tab = tabs[0];
+        } else {
+            for (const t of tabs) {
+                if (t.id === urlTab) {
+                    tab = t;
+                    break;
+                }
+            }
+            if (!tab) {
+                console.log('Could not match tab ' + urlTab);
+                tab = tabs[0];
             }
         }
-        if (!tab) {
-            console.log('Could not match tab ' + urlTab);
-            tab = tabs[0];
-        }
+        return <div>
+            <TabStrip tabs={tabs} current={tab.id} />
+            <Tab tab={tab} category={urlCategory} />
+        </div>;
     }
-    return <div>
-        <TabStrip tabs={tabs} current={tab.id} />
-        <Tab tab={tab} category={urlCategory} />
-    </div>;
 }
 
 const TabStrip = (props) => {
