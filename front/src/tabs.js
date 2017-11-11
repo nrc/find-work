@@ -187,11 +187,13 @@ export class IssueList extends React.Component {
         for (const i in this.props.issues) {
             const issue = this.props.issues[i];
 
-            let body = issue.body.trim();
+            let bodyText = issue.body.trim();
+            let body = null;
             let bodyMore = null;
-            const linebreak = body.indexOf('\n');
+            const linebreak = bodyText.indexOf('\n');
             if (!this.state.expanded[i] && linebreak > 0) {
-                body = body.substring(0, linebreak);
+                bodyText = bodyText.substring(0, linebreak);
+
                 const showMore = () => {
                     this.setState(prevState => {
                         let expanded = prevState.expanded.slice();
@@ -201,8 +203,9 @@ export class IssueList extends React.Component {
                 };
                 bodyMore = <span className="issueMore" onClick={showMore}>...</span>;
             }
-
-            body = marked(body);
+            if (bodyText) {
+                body = <div className="issueBody" dangerouslySetInnerHTML={{__html: marked(bodyText)}} />
+            }
 
             let labels = [];
             for (const l of issue.labels) {
@@ -211,7 +214,7 @@ export class IssueList extends React.Component {
             issues.push(
                 <div className='issue' key={i}>
                     <a href={issue.html_url} target="_blank">{issue.title}</a>
-                    <div className="issueBody" dangerouslySetInnerHTML={{__html: body}} />
+                    {body}
                     {bodyMore}
                     <div className="issueLabels">{labels}</div>
                 </div>
