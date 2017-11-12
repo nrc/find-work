@@ -213,9 +213,11 @@ span.issueMore:hover {
     color: #2a6496;
 }
 
-div.issueLabels {
+div.issueBody + div.issueLabels,
+span.issueMore + div.issueLabels {
     margin-top: 0.6em;
 }
+
 span.issueLabel {
     display: inline-block;
     border: 1px solid black;
