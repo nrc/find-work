@@ -6,13 +6,6 @@
     "link": null
 },
 {
-    "tab": "impl",
-    "category": "rustfmt",
-    "labels": [],
-    "milestone": "impl period",
-    "link": null
-},
-{
     "tab": "starters",
     "category": "rls",
     "labels": ["good first issue"],
@@ -77,21 +70,7 @@
 },
 {
     "tab": "impl",
-    "category": "rls",
-    "labels": [],
-    "milestone": "impl period",
-    "link": null
-},
-{
-    "tab": "impl",
     "category": "rls-clients",
-    "labels": [],
-    "milestone": "impl period",
-    "link": null
-},
-{
-    "tab": "impl",
-    "category": "rls-vscode",
     "labels": [],
     "milestone": "impl period",
     "link": null
