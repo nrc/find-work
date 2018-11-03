@@ -213,6 +213,10 @@ span.issueMore:hover {
     color: #2a6496;
 }
 
+div.issueBody img {
+    max-width: 100%;
+}
+
 div.issueBody + div.issueLabels,
 span.issueMore + div.issueLabels {
     margin-top: 0.6em;
