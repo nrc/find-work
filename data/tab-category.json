@@ -16,6 +16,7 @@
     "tab": "starters",
     "category": "bindgen",
     "labels": ["E-easy"],
+    "negative_labels": ["C-assigned"],
     "milestone": null,
     "link": null
 },
@@ -37,6 +38,7 @@
     "tab": "impl",
     "category": "bindgen",
     "labels": ["E-less-easy"],
+    "negative_labels": ["C-assigned"],
     "milestone": null,
     "link": null
 },
@@ -58,6 +60,7 @@
     "tab": "starters",
     "category": "rust-cookbook",
     "labels": ["easy"],
+    "negative_labels": ["claimed"],
     "milestone": null,
     "link": null
 },
@@ -65,6 +68,7 @@
     "tab": "impl",
     "category": "rust-cookbook",
     "labels": [],
+    "negative_labels": ["claimed"],
     "milestone": "impl period",
     "link": null
 },
